@@ -18,6 +18,7 @@
 		B66D4BCF267DC61C004D750D /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66D4BCE267DC61C004D750D /* SearchResultModel.swift */; };
 		B6779EE1267DD9C6002FDDDD /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6779EE0267DD9C6002FDDDD /* EmptyView.swift */; };
 		B6779EE3267DD9D0002FDDDD /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6779EE2267DD9D0002FDDDD /* EmptyView.xib */; };
+		B6779EE7267DDC23002FDDDD /* SearchDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6779EE6267DDC23002FDDDD /* SearchDetailViewModel.swift */; };
 		B6CFEBF8267D82D700CB74ED /* MainSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBF7267D82D700CB74ED /* MainSearchViewController.swift */; };
 		B6CFEBFA267D82E100CB74ED /* SearchDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBF9267D82E100CB74ED /* SearchDetailViewController.swift */; };
 		B6CFEBFC267D82FA00CB74ED /* DetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBFB267D82FA00CB74ED /* DetailWebViewController.swift */; };
@@ -75,6 +76,7 @@
 		B66D4BCE267DC61C004D750D /* SearchResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultModel.swift; sourceTree = "<group>"; };
 		B6779EE0267DD9C6002FDDDD /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		B6779EE2267DD9D0002FDDDD /* EmptyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
+		B6779EE6267DDC23002FDDDD /* SearchDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailViewModel.swift; sourceTree = "<group>"; };
 		B6CFEBF7267D82D700CB74ED /* MainSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSearchViewController.swift; sourceTree = "<group>"; };
 		B6CFEBF9267D82E100CB74ED /* SearchDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailViewController.swift; sourceTree = "<group>"; };
 		B6CFEBFB267D82FA00CB74ED /* DetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWebViewController.swift; sourceTree = "<group>"; };
@@ -197,6 +199,22 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		B6779EE4267DDC11002FDDDD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B6CFEBF9267D82E100CB74ED /* SearchDetailViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B6779EE5267DDC15002FDDDD /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B6779EE6267DDC23002FDDDD /* SearchDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		B6CFEBFD267D834A00CB74ED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -231,7 +249,8 @@
 		B6CFEC02267D842A00CB74ED /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				B6CFEBF9267D82E100CB74ED /* SearchDetailViewController.swift */,
+				B6779EE4267DDC11002FDDDD /* View */,
+				B6779EE5267DDC15002FDDDD /* ViewModel */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -545,6 +564,7 @@
 				B6CFEC1C267DC2C400CB74ED /* MainSearchViewModel.swift in Sources */,
 				B6CFEBF8267D82D700CB74ED /* MainSearchViewController.swift in Sources */,
 				B6CFEBFC267D82FA00CB74ED /* DetailWebViewController.swift in Sources */,
+				B6779EE7267DDC23002FDDDD /* SearchDetailViewModel.swift in Sources */,
 				B66D4BCF267DC61C004D750D /* SearchResultModel.swift in Sources */,
 				B6CFEC16267DB56200CB74ED /* NetworkAdapter.swift in Sources */,
 				B6CFEC06267D85B200CB74ED /* SearchTableViewCell.swift in Sources */,

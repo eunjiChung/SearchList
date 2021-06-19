@@ -116,10 +116,8 @@ extension MainSearchViewController: UITableViewDataSource {
 
 
 extension MainSearchViewController: UITableViewDelegate {
-
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: - 테이블 정보 보내주기
-        performSegue(withIdentifier: "showDetail", sender: nil)
+        performSegue(withIdentifier: "showDetail", sender: viewModel.resultModel[indexPath.row])
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -129,9 +127,10 @@ extension MainSearchViewController: UITableViewDelegate {
 }
 
 extension MainSearchViewController {
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // TODO: - sender 정보 받아와서 넘겨주기
-        guard let dest = segue.destination as? SearchDetailViewController else { return }
+        if let dest = segue.destination as? SearchDetailViewController,
+           let model = sender as? DocumentModel {
+            dest.viewModel.documentModel = model
+        }
     }
 }
