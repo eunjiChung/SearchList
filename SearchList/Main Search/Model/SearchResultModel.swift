@@ -24,13 +24,43 @@ struct MetaModel: Decodable {
     var totalCount: Int
 }
 
-struct DocumentModel: Decodable {
+enum DocumentType: String {
+    case none
+    case cafe
+    case blog
+}
+
+class DocumentModel: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case title
+        case thumbnail
+        case contents
+        case datetime
+        case url
+        case cafename
+        case blogname
+    }
+
+    var title: String
+    var thumbnail: String
+    var contents: String
+    var datetime: String
+    var url: String
     var cafename: String?
     var blogname: String?
 
-    var contents: String
-    var datetime: String
-    var thumbnail: String
-    var title: String
-    var url: String
+    var name: String {
+        if let cafename = cafename {
+            return cafename
+        } else if let blogname = blogname {
+            return blogname
+        }
+        return ""
+    }
+    var type: DocumentType {
+        if cafename != nil { return .cafe }
+        if blogname != nil { return .blog }
+        return .none
+    }
+    var isSelected: Bool = false
 }
