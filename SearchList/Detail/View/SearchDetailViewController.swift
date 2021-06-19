@@ -17,6 +17,8 @@ class SearchDetailViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var urlLinkLabel: UILabel!
 
+    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
+
     lazy var viewModel: SearchDetailViewModel = {
         return SearchDetailViewModel()
     }()
@@ -31,9 +33,17 @@ class SearchDetailViewController: UIViewController {
         guard let model = viewModel.documentModel else { fatalError() }
 
         self.title = model.type.rawValue
+
         if let url = URL(string: model.thumbnail) {
-            contentImageView.sd_setImage(with: url, completed: nil)
+            contentImageView.sd_setImage(with: url) { image, _, _, _ in
+                if let image = image {
+                    let height: CGFloat = self.contentImageView.frame.size.width * image.size.height / image.size.width
+                    self.imageViewHeightConstraint.constant = height
+                    self.view.setNeedsLayout()
+                }
+            }
         }
+
         typeLabel.text = model.name
         titleLabel.text = model.title
         contentLabel.text = model.contents
@@ -51,7 +61,7 @@ extension SearchDetailViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? DetailWebViewController,
            let url = sender as? String {
-            
+
         }
     }
 }
