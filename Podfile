@@ -8,6 +8,7 @@ target 'SearchList' do
   # Pods for SearchList
    pod 'Moya'
    pod 'KakaoSDKCommon'  # 필수 요소를 담은 공통 모듈
+   pod 'SDWebImage', '~> 5.11.1'
 
   target 'SearchListTests' do
     inherit! :search_paths
