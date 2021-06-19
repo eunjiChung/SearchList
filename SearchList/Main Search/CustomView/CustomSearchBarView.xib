@@ -12,7 +12,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomSearchBarView" customModule="SearchList" customModuleProvider="target">
             <connections>
                 <outlet property="historyView" destination="THB-ar-b7N" id="uEU-D7-rGh"/>
-                <outlet property="historyViewTopConstraint" destination="oFo-TP-rAb" id="8Qy-68-bdf"/>
                 <outlet property="searchBar" destination="o5c-o8-Uc7" id="7l3-jo-uCW"/>
                 <outlet property="tableView" destination="Qpb-hI-KCQ" id="PWx-Ok-e4f"/>
             </connections>
@@ -25,6 +24,9 @@
                 <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="o5c-o8-Uc7">
                     <rect key="frame" x="0.0" y="0.0" width="504" height="382"/>
                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="1Sc-bd-rFv"/>
+                    </connections>
                 </searchBar>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FCe-uk-Giz">
                     <rect key="frame" x="504" y="0.0" width="30" height="382"/>
