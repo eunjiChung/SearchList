@@ -14,8 +14,8 @@ struct KakaoKey {
 }
 
 enum SearchAPI {
-    case searchBlog(query: String, sort: String, page: Int)
-    case searchCafe(query: String, sort: String, page: Int)
+    case searchBlog(query: String, page: Int)
+    case searchCafe(query: String, page: Int)
 }
 
 extension SearchAPI: TargetType {
@@ -24,8 +24,8 @@ extension SearchAPI: TargetType {
 
     var path: String {
         switch self {
-        case .searchBlog(_, _, _):     return "/v2/search/blog"
-        case .searchCafe(_, _, _):     return "/v2/search/cafe"
+        case .searchBlog(_, _):     return "/v2/search/blog"
+        case .searchCafe(_, _):     return "/v2/search/cafe"
         }
     }
 
@@ -33,9 +33,8 @@ extension SearchAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .searchBlog(let query, let sort, let page), .searchCafe(let query, let sort, let page):
-            let param: [String: Any] = ["query": query, "sort": sort,
-                                        "page": page, "size": 25]
+        case .searchBlog(let query, let page), .searchCafe(let query, let page):
+            let param: [String: Any] = ["query": query, "page": page, "size": 25]
             return .requestParameters(parameters: param, encoding: URLEncoding.default)
         }
     }
