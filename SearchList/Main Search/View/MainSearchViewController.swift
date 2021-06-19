@@ -11,7 +11,6 @@ class MainSearchViewController: UIViewController {
 
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var filterViewHeightConstraint: NSLayoutConstraint!
-
     @IBOutlet weak var tableView: UITableView!
 
     let searchView = CustomSearchBarView()
@@ -74,7 +73,15 @@ class MainSearchViewController: UIViewController {
     }
 
     private func initViewModel() {
-        
+        viewModel.requestSearch()
+
+        viewModel.didFinishRequest = { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.emptyView.isHidden = self.viewModel.resultModel.count > 0
+                self.tableView.reloadData()
+            }
+        }
     }
 
     @objc func hideKeyboard() {
@@ -91,11 +98,15 @@ class MainSearchViewController: UIViewController {
 
 extension MainSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return viewModel.resultModel.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.id, for: indexPath) as! SearchTableViewCell
+        cell.updateSelectedStatus = { 
+            tableView.reloadRows(at: [indexPath], with: .none)
+        }
+        cell.model = viewModel.resultModel[indexPath.row]
         return cell
     }
 }
