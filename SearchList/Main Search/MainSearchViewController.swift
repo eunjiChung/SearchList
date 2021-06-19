@@ -16,7 +16,7 @@ class MainSearchViewController: UIViewController {
 
     let searchView = CustomSearchBarView()
 
-    lazy var customFilterView = {
+    lazy var customFilterView: FilterView = {
         return FilterView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: filterView.frame.height))
     }()
 
@@ -27,12 +27,17 @@ class MainSearchViewController: UIViewController {
         }
     }
 
+    lazy var viewModel: MainSearchViewModel = {
+        return MainSearchViewModel()
+    }()
+
     // EmtpyView 추가하기
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initView()
+        initViewModel()
     }
 
     private func initView() {
@@ -66,6 +71,10 @@ class MainSearchViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
         tableView.addGestureRecognizer(tapGesture)
+    }
+
+    private func initViewModel() {
+
     }
 
     @objc func hideKeyboard() {
