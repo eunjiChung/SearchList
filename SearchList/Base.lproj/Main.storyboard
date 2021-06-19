@@ -233,7 +233,7 @@
                         <outlet property="titleLabel" destination="3jA-ad-reQ" id="oD7-C8-gxn"/>
                         <outlet property="typeLabel" destination="Zzt-b0-MKm" id="3d1-P6-pxT"/>
                         <outlet property="urlLinkLabel" destination="mSM-eM-gc8" id="Xid-QX-C1N"/>
-                        <segue destination="kSe-Dd-tWV" kind="show" id="YUp-av-IW7"/>
+                        <segue destination="kSe-Dd-tWV" kind="show" identifier="showWebPage" id="YUp-av-IW7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ih0-xf-LF0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
