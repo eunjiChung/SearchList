@@ -30,7 +30,11 @@ class MainSearchViewController: UIViewController {
         return MainSearchViewModel()
     }()
 
-    // EmtpyView 추가하기
+    private lazy var emptyView: EmptyView = {
+        let emptyView = EmptyView(frame: tableView.bounds)
+        emptyView.isHidden = false
+        return emptyView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,13 +45,15 @@ class MainSearchViewController: UIViewController {
 
     private func initView() {
         navigationItem.titleView = searchView
+        tableView.backgroundView = emptyView
+        filterView.addSubview(customFilterView)
+
         searchView.searchKeyword = { [weak self] keyword in
             guard let self = self else { return }
             self.tableView.reloadData()
             self.hideKeyboard()
         }
 
-        filterView.addSubview(customFilterView)
         customFilterView.selectFilter = { [weak self] type in
             guard let self = self else { return }
             self.tableView.reloadData()

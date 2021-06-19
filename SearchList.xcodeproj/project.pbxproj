@@ -16,6 +16,8 @@
 		B639CBB9267D7F2200A0F141 /* SearchListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B639CBB8267D7F2200A0F141 /* SearchListTests.swift */; };
 		B639CBC4267D7F2200A0F141 /* SearchListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B639CBC3267D7F2200A0F141 /* SearchListUITests.swift */; };
 		B66D4BCF267DC61C004D750D /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66D4BCE267DC61C004D750D /* SearchResultModel.swift */; };
+		B6779EE1267DD9C6002FDDDD /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6779EE0267DD9C6002FDDDD /* EmptyView.swift */; };
+		B6779EE3267DD9D0002FDDDD /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6779EE2267DD9D0002FDDDD /* EmptyView.xib */; };
 		B6CFEBF8267D82D700CB74ED /* MainSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBF7267D82D700CB74ED /* MainSearchViewController.swift */; };
 		B6CFEBFA267D82E100CB74ED /* SearchDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBF9267D82E100CB74ED /* SearchDetailViewController.swift */; };
 		B6CFEBFC267D82FA00CB74ED /* DetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBFB267D82FA00CB74ED /* DetailWebViewController.swift */; };
@@ -71,6 +73,8 @@
 		B639CBC3267D7F2200A0F141 /* SearchListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListUITests.swift; sourceTree = "<group>"; };
 		B639CBC5267D7F2200A0F141 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B66D4BCE267DC61C004D750D /* SearchResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultModel.swift; sourceTree = "<group>"; };
+		B6779EE0267DD9C6002FDDDD /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		B6779EE2267DD9D0002FDDDD /* EmptyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
 		B6CFEBF7267D82D700CB74ED /* MainSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSearchViewController.swift; sourceTree = "<group>"; };
 		B6CFEBF9267D82E100CB74ED /* SearchDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailViewController.swift; sourceTree = "<group>"; };
 		B6CFEBFB267D82FA00CB74ED /* DetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWebViewController.swift; sourceTree = "<group>"; };
@@ -257,6 +261,8 @@
 				B6CFEC0D267D8AD500CB74ED /* FilterView.xib */,
 				B6CFEC10267D966900CB74ED /* HistoryTableViewCell.swift */,
 				B6CFEC11267D966900CB74ED /* HistoryTableViewCell.xib */,
+				B6779EE0267DD9C6002FDDDD /* EmptyView.swift */,
+				B6779EE2267DD9D0002FDDDD /* EmptyView.xib */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -399,6 +405,7 @@
 				B6CFEC0E267D8AD500CB74ED /* FilterView.xib in Resources */,
 				B639CBAE267D7F2200A0F141 /* LaunchScreen.storyboard in Resources */,
 				B6CFEC0A267D860B00CB74ED /* CustomSearchBarView.xib in Resources */,
+				B6779EE3267DD9D0002FDDDD /* EmptyView.xib in Resources */,
 				B639CBAB267D7F2200A0F141 /* Assets.xcassets in Resources */,
 				B6CFEC13267D966900CB74ED /* HistoryTableViewCell.xib in Resources */,
 				B639CBA9267D7F2100A0F141 /* Main.storyboard in Resources */,
@@ -530,6 +537,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6CFEC18267DB64D00CB74ED /* SearchAPI.swift in Sources */,
+				B6779EE1267DD9C6002FDDDD /* EmptyView.swift in Sources */,
 				B6CFEC0C267D8AC100CB74ED /* FilterView.swift in Sources */,
 				B639CBA2267D7F2100A0F141 /* AppDelegate.swift in Sources */,
 				B6CFEC12267D966900CB74ED /* HistoryTableViewCell.swift in Sources */,
