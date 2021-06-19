@@ -8,11 +8,13 @@
 import UIKit
 import WebKit
 
+typealias WebInfo = (title: String, urlString: String)
+
 class DetailWebViewController: UIViewController {
 
     @IBOutlet weak var webView: WKWebView!
 
-    var url: String?
+    var info: WebInfo?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +23,31 @@ class DetailWebViewController: UIViewController {
     }
 
     private func initView() {
-
+        self.title = info?.title
+        loadWebPage()
     }
-}
 
-extension DetailWebViewController {
+    func loadWebPage() {
+        if let urlString = info?.urlString,
+           let url = URL(string: urlString) {
+            let request = URLRequest(url: url)
+            webView.load(request)
+        }
+    }
 
+    @IBAction func touchBack(_ sender: Any) {
+        webView.goBack()
+    }
+
+    @IBAction func touchForward(_ sender: Any) {
+        webView.goForward()
+    }
+
+    @IBAction func touchReload(_ sender: Any) {
+        webView.reload()
+    }
+
+    @IBAction func touchStop(_ sender: Any) {
+        webView.stopLoading()
+    }
 }

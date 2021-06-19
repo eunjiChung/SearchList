@@ -52,7 +52,9 @@ class SearchDetailViewController: UIViewController {
     }
 
     @IBAction func touchDetailInfo(_ sender: Any) {
-        performSegue(withIdentifier: "showWebPage", sender: viewModel.documentModel?.url)
+        guard let model = viewModel.documentModel else { fatalError() }
+        let info: WebInfo = (model.title, model.url)
+        performSegue(withIdentifier: "showWebPage", sender: info)
     }
 }
 
@@ -60,8 +62,8 @@ extension SearchDetailViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? DetailWebViewController,
-           let url = sender as? String {
-
+           let info = sender as? WebInfo {
+            dest.info = info
         }
     }
 }

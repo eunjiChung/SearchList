@@ -261,13 +261,29 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cN5-aZ-LUc">
                                 <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
-                                    <barButtonItem image="chevron.backward" catalog="system" id="nEe-1d-SUD"/>
+                                    <barButtonItem image="chevron.backward" catalog="system" id="nEe-1d-SUD">
+                                        <connections>
+                                            <action selector="touchBack:" destination="kSe-Dd-tWV" id="ycR-11-b2G"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="yp5-Bi-6Ls"/>
-                                    <barButtonItem image="chevron.forward" catalog="system" id="qUo-7y-gOJ"/>
+                                    <barButtonItem image="chevron.forward" catalog="system" id="qUo-7y-gOJ">
+                                        <connections>
+                                            <action selector="touchForward:" destination="kSe-Dd-tWV" id="kvo-QU-Dit"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Qgl-Rr-iQV"/>
-                                    <barButtonItem image="arrow.clockwise" catalog="system" id="8rE-aX-3cQ"/>
+                                    <barButtonItem image="arrow.clockwise" catalog="system" id="8rE-aX-3cQ">
+                                        <connections>
+                                            <action selector="touchReload:" destination="kSe-Dd-tWV" id="ymx-Bo-pRm"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Sdu-dB-ijj"/>
-                                    <barButtonItem image="multiply" catalog="system" id="YMR-O6-Okc"/>
+                                    <barButtonItem image="multiply" catalog="system" id="YMR-O6-Okc">
+                                        <connections>
+                                            <action selector="touchStop:" destination="kSe-Dd-tWV" id="Fpl-Al-fNZ"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
