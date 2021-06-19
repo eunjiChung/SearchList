@@ -14,6 +14,8 @@ class MainSearchViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
+    let searchView = CustomSearchBarView()
+
     // EmtpyView 추가하기
 
     override func viewDidLoad() {
@@ -23,6 +25,13 @@ class MainSearchViewController: UIViewController {
     }
 
     private func initView() {
+        navigationItem.titleView = searchView
+        searchView.searchKeyword = { [weak self] keyword in
+            guard let self = self else { return }
+            self.tableView.reloadData()
+            self.hideKeyboard()
+        }
+
         let customFilterView = FilterView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: filterView.frame.height))
         filterView.addSubview(customFilterView)
         customFilterView.selectFilter = { [weak self] type in
@@ -43,8 +52,15 @@ class MainSearchViewController: UIViewController {
             alert.addAction(cancel)
             self.present(alert, animated: true, completion: nil)
         }
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        tableView.addGestureRecognizer(tapGesture)
     }
 
+    @objc func hideKeyboard() {
+        searchView.endEditing(true)
+    }
 }
 
 
