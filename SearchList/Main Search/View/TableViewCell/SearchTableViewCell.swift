@@ -18,8 +18,6 @@ final class SearchTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var thumbnailImageView: UIImageView!
 
-    var updateSelectedStatus: (() -> Void)?
-
     var model: DocumentModel? {
         didSet {
             guard let model = model else { return }
@@ -27,13 +25,14 @@ final class SearchTableViewCell: UITableViewCell {
             nameLabel.text = model.name
             titleLabel.text = model.title
             dateLabel.text = model.datetime
-            model.isSelected = true
 
             if let url = URL(string: model.thumbnail) {
                 thumbnailImageView.sd_setImage(with: url, completed: nil)
             }
 
-            updateSelectedStatus?()
+            if model.isSelected {
+                self.backgroundColor = .lightGray
+            }
         }
     }
 }

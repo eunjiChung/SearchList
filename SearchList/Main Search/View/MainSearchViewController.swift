@@ -109,9 +109,6 @@ extension MainSearchViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.id, for: indexPath) as! SearchTableViewCell
-        cell.updateSelectedStatus = { 
-            tableView.reloadRows(at: [indexPath], with: .none)
-        }
         cell.model = viewModel.resultModel[indexPath.row]
         return cell
     }
