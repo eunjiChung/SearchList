@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum FilterButtonType: Int {
+enum FilterType: Int {
     case all = 0
     case blog
     case cafe
@@ -21,6 +21,11 @@ enum FilterButtonType: Int {
     }
 }
 
+enum SortType {
+    case title
+    case datetime
+}
+
 final class FilterView: UIView {
 
     private let xibName = "FilterView"
@@ -31,7 +36,7 @@ final class FilterView: UIView {
     @IBOutlet weak var filterViewTopConstraint: NSLayoutConstraint!
 
     var touchSortButton: (() -> Void)?
-    var selectFilter: ((FilterButtonType) -> Void)?
+    var selectFilter: ((FilterType) -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -77,8 +82,8 @@ final class FilterView: UIView {
     }
 
     @IBAction func selectFilter(_ sender: UIButton) {
-        currentFilterButton.setTitle(FilterButtonType(rawValue: sender.tag)?.title, for: .normal)
-        selectFilter?(FilterButtonType(rawValue: sender.tag) ?? .all)
+        currentFilterButton.setTitle(FilterType(rawValue: sender.tag)?.title, for: .normal)
+        selectFilter?(FilterType(rawValue: sender.tag) ?? .all)
         filterListView.isHidden = true
     }
 
