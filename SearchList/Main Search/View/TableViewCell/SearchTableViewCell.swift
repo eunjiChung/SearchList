@@ -24,7 +24,7 @@ final class SearchTableViewCell: UITableViewCell {
             docTypeLabel.text = model.type.rawValue
             nameLabel.text = model.name
             titleLabel.attributedText = model.title.htmlToAttributedString()
-            dateLabel.text = model.datetime
+            dateLabel.text = model.datetime.toMainDate
 
             if let url = URL(string: model.thumbnail) {
                 thumbnailImageView.sd_setImage(with: url, completed: nil)
