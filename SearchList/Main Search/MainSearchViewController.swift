@@ -16,6 +16,17 @@ class MainSearchViewController: UIViewController {
 
     let searchView = CustomSearchBarView()
 
+    lazy var customFilterView = {
+        return FilterView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: filterView.frame.height))
+    }()
+
+    var scrollOffsetY: CGFloat = 0 {
+        didSet {
+            guard scrollOffsetY > 50 else { return }
+            changeFilterView(oldValue < scrollOffsetY)
+        }
+    }
+
     // EmtpyView 추가하기
 
     override func viewDidLoad() {
@@ -32,7 +43,6 @@ class MainSearchViewController: UIViewController {
             self.hideKeyboard()
         }
 
-        let customFilterView = FilterView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: filterView.frame.height))
         filterView.addSubview(customFilterView)
         customFilterView.selectFilter = { [weak self] type in
             guard let self = self else { return }
@@ -61,6 +71,12 @@ class MainSearchViewController: UIViewController {
     @objc func hideKeyboard() {
         searchView.endEditing(true)
     }
+
+    private func changeFilterView(_ isScrollDown: Bool) {
+        if filterView.isHidden && isScrollDown { return }
+        filterView.isHidden = isScrollDown
+        filterViewHeightConstraint.constant = isScrollDown ? 0 : 50
+    }
 }
 
 
@@ -81,6 +97,11 @@ extension MainSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // TODO: - 테이블 정보 보내주기
         performSegue(withIdentifier: "showDetail", sender: nil)
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffsetY: CGFloat = scrollView.contentOffset.y
+        scrollOffsetY = contentOffsetY
     }
 }
 

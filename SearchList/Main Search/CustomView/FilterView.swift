@@ -52,15 +52,34 @@ final class FilterView: UIView {
     }
 
     private func initView() {
+        filterListView.isHidden = true
+    }
+
+    // 터치 영역 넓히기
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        guard isUserInteractionEnabled || !isHidden || alpha > 0.01 else { return nil }
+
+        let touchRect = currentFilterButton.isSelected ? bounds.insetBy(dx: 0, dy: -200) : bounds.inset(by: .zero)
+        guard touchRect.contains(point) else { return nil }
+
+        for subview in subviews.reversed() {
+            let convertedPoint = subview.convert(point, from: self)
+            if let hitTestView = subview.hitTest(convertedPoint, with: event) {
+                return hitTestView
+            }
+        }
+        return self
     }
 
     @IBAction func touchFilterButton(_ sender: UIButton) {
-
+        sender.isSelected = !sender.isSelected
+        filterListView.isHidden = !sender.isSelected
     }
 
     @IBAction func selectFilter(_ sender: UIButton) {
         currentFilterButton.setTitle(FilterButtonType(rawValue: sender.tag)?.title, for: .normal)
         selectFilter?(FilterButtonType(rawValue: sender.tag) ?? .all)
+        filterListView.isHidden = true
     }
 
     @IBAction func touchSortButton(_ sender: Any) {
