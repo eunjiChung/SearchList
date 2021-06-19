@@ -23,7 +23,7 @@ final class SearchTableViewCell: UITableViewCell {
             guard let model = model else { return }
             docTypeLabel.text = model.type.rawValue
             nameLabel.text = model.name
-            titleLabel.text = model.title
+            titleLabel.attributedText = model.title.htmlToAttributedString()
             dateLabel.text = model.datetime
 
             if let url = URL(string: model.thumbnail) {

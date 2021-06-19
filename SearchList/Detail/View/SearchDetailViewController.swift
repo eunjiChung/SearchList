@@ -45,8 +45,8 @@ class SearchDetailViewController: UIViewController {
         }
 
         typeLabel.text = model.name
-        titleLabel.text = model.title
-        contentLabel.text = model.contents
+        titleLabel.attributedText = model.title.htmlToAttributedString()
+        contentLabel.attributedText = model.contents.htmlToAttributedString()
         dateLabel.text = model.datetime
         urlLinkLabel.text = model.url
     }
