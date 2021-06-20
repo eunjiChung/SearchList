@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SearchViewModelDelegate: AnyObject {
-    func onFetchCompleted()
+    func onFetchCompleted(with startIndex: Int, indexPaths: [IndexPath]?)
     func onFetchFailed()
 }
 
@@ -43,10 +43,22 @@ final class SearchViewModel {
         page += 1
 
         _ = SearchListProvider(query: query!, page: page) { model in
+            // TODO: - 새로 sorting한 list 집어넣기
             self.list.append(contentsOf: model)
-            self.delegate?.onFetchCompleted()
+
+            if self.page > 1 {
+                self.delegate?.onFetchCompleted(with: self.list.count-model.count, indexPaths: self.loadingIndexPaths(from: model))
+            } else {
+                self.delegate?.onFetchCompleted(with: 0, indexPaths: nil)
+            }
         } failure: {
             self.delegate?.onFetchFailed()
         }
+    }
+
+    private func loadingIndexPaths(from givenList: [DocumentModel]) -> [IndexPath]? {
+        let startIndex = list.count - givenList.count
+        let endIndex = startIndex + givenList.count
+        return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
     }
 }

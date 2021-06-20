@@ -84,14 +84,34 @@ class MainSearchViewController: UIViewController {
         DispatchQueue.main.async {
             self.emptyView.isHidden = self.viewModel.list.count > 0
             self.tableView.reloadData()
+
+            if self.tableView.refreshControl?.isRefreshing ?? false {
+                self.tableView.refreshControl?.endRefreshing()
+            }
         }
+    }
+
+    private func updateTable() {
     }
 }
 
 extension MainSearchViewController: SearchViewModelDelegate {
-    func onFetchCompleted() {
-        reloadTable()
-        viewModel.isWaiting = true
+    func onFetchCompleted(with startIndex: Int, indexPaths: [IndexPath]?) {
+        defer { viewModel.isWaiting = true }
+
+        guard let newIndexPaths = indexPaths else {
+            reloadTable()
+            return
+        }
+
+        DispatchQueue.main.async {
+            self.tableView.performBatchUpdates({
+                if !self.viewModel.hasMore {
+                    self.tableView.deleteRows(at: [IndexPath(row: startIndex, section: 0)], with: .fade)
+                }
+                self.tableView.insertRows(at: newIndexPaths, with: .fade)
+            })
+        }
     }
 
     func onFetchFailed() {
