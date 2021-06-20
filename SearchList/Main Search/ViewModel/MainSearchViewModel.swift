@@ -73,38 +73,38 @@ final class MainSearchViewModel {
     }
 
     private func requestBlog(query: String, completion: DispatchLeave) {
-        NetworkAdapter.request(target: SearchAPI.searchBlog(query: query, page: page)) { response in
-            do {
-                self.blogModel = try JSONDecoder().decode(SearchResultModel.self, from: response.data)
-                completion?()
-            } catch {
-                print("‼️", error)
-                completion?()
-            }
-        } error: { error in
-            print("‼️", error)
-            completion?()
-        } failure: { failError in
-            print("‼️", failError)
-            completion?()
-        }
+//        NetworkAdapter.request(target: SearchAPI.searchBlog(query: query, page: page)) { response in
+//            do {
+//                self.blogModel = try JSONDecoder().decode(SearchResultModel.self, from: response.data)
+//                completion?()
+//            } catch {
+//                print("‼️", error)
+//                completion?()
+//            }
+//        } error: { error in
+//            print("‼️", error)
+//            completion?()
+//        } failure: { failError in
+//            print("‼️", failError)
+//            completion?()
+//        }
     }
 
     private func requestCafe(query: String, completion: DispatchLeave) {
-        NetworkAdapter.request(target: SearchAPI.searchCafe(query: query, page: page)) { response in
-            do {
-                self.cafeModel = try JSONDecoder().decode(SearchResultModel.self, from: response.data)
-                completion?()
-            } catch {
-                print("‼️", error)
-                completion?()
-            }
-        } error: { error in
-            print("‼️", error)
-            completion?()
-        } failure: { failError in
-            print("‼️", failError)
-            completion?()
-        }
+//        NetworkAdapter.request(target: SearchAPI.searchCafe(query: query, page: page)) { response in
+//            do {
+//                self.cafeModel = try JSONDecoder().decode(SearchResultModel.self, from: response.data)
+//                completion?()
+//            } catch {
+//                print("‼️", error)
+//                completion?()
+//            }
+//        } error: { error in
+//            print("‼️", error)
+//            completion?()
+//        } failure: { failError in
+//            print("‼️", failError)
+//            completion?()
+//        }
     }
 }
