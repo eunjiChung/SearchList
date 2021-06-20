@@ -29,9 +29,10 @@ final class SearchViewModel {
 
     func request() {
         let provider = SearchListProvider(query: query!, page: page) { model in
-            print("❤️", model)
             self.list = model
             self.delegate?.onFetchCompleted()
+        } failure: {
+            self.delegate?.onFetchFailed()
         }
     }
 }

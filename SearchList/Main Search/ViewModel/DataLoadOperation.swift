@@ -22,14 +22,14 @@ class DataLoadOperation: AsyncOperation {
     fileprivate let target: SearchTargetType
     fileprivate let query: String
     fileprivate let page: Int
-    fileprivate let completion: ((SearchResultModel?) -> Void)?
+    fileprivate let failure: (() -> Void)?
     fileprivate var loadedModel: SearchResultModel?
 
-    init(target: SearchTargetType, query: String, page: Int, completion: ((SearchResultModel?) -> Void)? = nil) {
+    init(target: SearchTargetType, query: String, page: Int, failure: (() -> Void)? = nil) {
         self.target = target
         self.query = query
         self.page = page
-        self.completion = completion
+        self.failure = failure
         super.init()
     }
 
@@ -44,20 +44,20 @@ class DataLoadOperation: AsyncOperation {
             do {
                 let model = try JSONDecoder().decode(SearchResultModel.self, from: response.data)
                 self.loadedModel = model
-                self.completion?(model)
                 self.state = .Finished
             } catch {
                 print("‼️", error.localizedDescription)
                 self.state = .Finished
+                self.failure?()
             }
         } error: { error in
             print("‼️", error.localizedDescription)
-            self.completion?(nil)
             self.state = .Finished
+            self.failure?()
         } failure: { failError in
             print("‼️", failError.localizedDescription)
-            self.completion?(nil)
             self.state = .Finished
+            self.failure?()
         }
     }
 }

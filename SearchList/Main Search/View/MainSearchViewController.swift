@@ -26,7 +26,7 @@ class MainSearchViewController: UIViewController {
         }
     }
 
-    var newViewModel: SearchViewModel!
+    var viewModel: SearchViewModel!
 
     private lazy var emptyView: EmptyView = {
         let emptyView = EmptyView(frame: tableView.bounds)
@@ -77,10 +77,10 @@ class MainSearchViewController: UIViewController {
     }
 
     private func initViewModel() {
-        newViewModel = SearchViewModel(delegate: self)
-        newViewModel.query = "아이유"
+        viewModel = SearchViewModel(delegate: self)
+        viewModel.query = "아이유"
 
-        newViewModel.request()
+        viewModel.request()
     }
 
     @objc func hideKeyboard() {
@@ -93,9 +93,9 @@ class MainSearchViewController: UIViewController {
         filterViewHeightConstraint.constant = isScrollDown ? 0 : 50
     }
 
-    private func reload() {
+    private func reloadTable() {
         DispatchQueue.main.async {
-            self.emptyView.isHidden = self.newViewModel.list.count > 0
+            self.emptyView.isHidden = self.viewModel.list.count > 0
             self.tableView.reloadData()
         }
     }
@@ -103,23 +103,24 @@ class MainSearchViewController: UIViewController {
 
 extension MainSearchViewController: SearchViewModelDelegate {
     func onFetchCompleted() {
-        reload()
+        reloadTable()
     }
 
     func onFetchFailed() {
-
+        let alert = UIAlertController(title: "알림", message: "데이터 가져오기에 실패했습니다", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }
 
-
 extension MainSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newViewModel.list.count
+        return viewModel.list.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.id, for: indexPath) as! SearchTableViewCell
-        cell.model = newViewModel.list[indexPath.row]
+        cell.model = viewModel.list[indexPath.row]
         return cell
     }
 }
@@ -127,7 +128,7 @@ extension MainSearchViewController: UITableViewDataSource {
 
 extension MainSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showDetail", sender: newViewModel.list[indexPath.row])
+        performSegue(withIdentifier: "showDetail", sender: viewModel.list[indexPath.row])
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

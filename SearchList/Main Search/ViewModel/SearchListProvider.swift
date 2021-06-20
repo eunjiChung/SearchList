@@ -11,19 +11,28 @@ class SearchListProvider {
 
     fileprivate let operationQueue = OperationQueue()
 
+    fileprivate var isOperationExecuting: Bool {
+        return operationQueue.operations.contains(where: { $0.isExecuting })
+    }
+
     // List는 임시
     var list: [DocumentModel] = []
 
-    init(query: String, page: Int, completion: @escaping (([DocumentModel]) -> Void)) {
+    init(query: String, page: Int, completion: @escaping (([DocumentModel]) -> Void), failure: @escaping (() -> Void)) {
         operationQueue.maxConcurrentOperationCount = 2
 
-        let cafeFetch = DataLoadOperation(target: .cafe, query: query, page: page)
-        let blogFetch = DataLoadOperation(target: .blog, query: query, page: page)
+        let setFailedStatus = {
+            guard self.isOperationExecuting else { return }
+            self.cancel()
+            failure()
+        }
+        let cafeFetch = DataLoadOperation(target: .cafe, query: query, page: page, failure: setFailedStatus)
+        let blogFetch = DataLoadOperation(target: .blog, query: query, page: page, failure: setFailedStatus)
         let listProvider = SearchOperationDataProvider()
         let sortList = SortListModel { model in
             if let model = model {
                 self.list = model
-                completion(self.list)
+                completion(model)
             }
         }
 
