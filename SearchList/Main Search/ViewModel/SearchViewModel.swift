@@ -22,6 +22,8 @@ final class SearchViewModel {
 
     var list: [DocumentModel] = []
 
+    var rowCount: Int { return list.count + (hasMore ? 1 : 0) }
+
     private var page: Int = 0
     private var isFirstLoad: Bool { return page == 0 }
 

@@ -23,7 +23,7 @@ class MainSearchViewController: UIViewController {
 
     private lazy var emptyView: EmptyView = {
         let emptyView = EmptyView(frame: tableView.bounds)
-        emptyView.isHidden = false
+        emptyView.isHidden = true
         return emptyView
     }()
 
@@ -80,12 +80,6 @@ class MainSearchViewController: UIViewController {
         searchView.endEditing(true)
     }
 
-    private func changeFilterView(_ isScrollDown: Bool) {
-        if filterView.isHidden && isScrollDown { return }
-        filterView.isHidden = isScrollDown
-        filterViewHeightConstraint.constant = isScrollDown ? 0 : 50
-    }
-
     private func reloadTable() {
         DispatchQueue.main.async {
             self.emptyView.isHidden = self.viewModel.list.count > 0
@@ -104,19 +98,30 @@ extension MainSearchViewController: SearchViewModelDelegate {
         let alert = UIAlertController(title: "알림", message: "데이터 가져오기에 실패했습니다", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
+
         viewModel.isWaiting = true
     }
 }
 
 extension MainSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.list.count
+        return viewModel.rowCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.id, for: indexPath) as! SearchTableViewCell
-        cell.model = viewModel.list[indexPath.row]
-        return cell
+        if isLoadingPosition(of: indexPath) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: LoadingTableViewCell.id, for: indexPath) as! LoadingTableViewCell
+            cell.startLoading()
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.id, for: indexPath) as! SearchTableViewCell
+            cell.model = viewModel.list[indexPath.row]
+            return cell
+        }
+    }
+
+    private func isLoadingPosition(of indexPath: IndexPath) -> Bool {
+        return viewModel.hasMore && indexPath.row == viewModel.rowCount-1
     }
 }
 
@@ -137,6 +142,12 @@ extension MainSearchViewController: UITableViewDelegate {
         if isLoadingPosition {
             viewModel.request()
         }
+    }
+
+    private func changeFilterView(_ isScrollDown: Bool) {
+        if filterView.isHidden && isScrollDown { return }
+        filterView.isHidden = isScrollDown
+        filterViewHeightConstraint.constant = isScrollDown ? 0 : 50
     }
 }
 
