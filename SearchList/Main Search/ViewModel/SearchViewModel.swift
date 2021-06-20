@@ -14,22 +14,34 @@ protocol SearchViewModelDelegate: AnyObject {
 
 final class SearchViewModel {
 
-    private weak var delegate: SearchViewModelDelegate?
-
     var query: String?
-    var page: Int = 1
+
+    var isWaiting: Bool = false
+
+    var hasMore: Bool = true
 
     var list: [DocumentModel] = []
 
-    var provider: [SearchListProvider] = []
+    private var page: Int = 0
+    private var isFirstLoad: Bool { return page == 0 }
+
+    private weak var delegate: SearchViewModelDelegate?
 
     init(delegate: SearchViewModelDelegate) {
         self.delegate = delegate
     }
 
     func request() {
-        let provider = SearchListProvider(query: query!, page: page) { model in
-            self.list = model
+        if !isFirstLoad {
+            guard hasMore && isWaiting else { return }
+        }
+
+        isWaiting = false
+
+        page += 1
+
+        _ = SearchListProvider(query: query!, page: page) { model in
+            self.list.append(contentsOf: model)
             self.delegate?.onFetchCompleted()
         } failure: {
             self.delegate?.onFetchFailed()

@@ -19,13 +19,6 @@ class MainSearchViewController: UIViewController {
         return FilterView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: filterView.frame.height))
     }()
 
-    var scrollOffsetY: CGFloat = 0 {
-        didSet {
-            guard scrollOffsetY > 50 else { return }
-            changeFilterView(oldValue < scrollOffsetY)
-        }
-    }
-
     var viewModel: SearchViewModel!
 
     private lazy var emptyView: EmptyView = {
@@ -104,12 +97,14 @@ class MainSearchViewController: UIViewController {
 extension MainSearchViewController: SearchViewModelDelegate {
     func onFetchCompleted() {
         reloadTable()
+        viewModel.isWaiting = true
     }
 
     func onFetchFailed() {
         let alert = UIAlertController(title: "알림", message: "데이터 가져오기에 실패했습니다", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
+        viewModel.isWaiting = true
     }
 }
 
@@ -125,7 +120,6 @@ extension MainSearchViewController: UITableViewDataSource {
     }
 }
 
-
 extension MainSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "showDetail", sender: viewModel.list[indexPath.row])
@@ -133,7 +127,16 @@ extension MainSearchViewController: UITableViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentOffsetY: CGFloat = scrollView.contentOffset.y
-        scrollOffsetY = contentOffsetY
+        let isScrollDown: Bool = scrollView.panGestureRecognizer.translation(in: scrollView).y < 0
+        let isLoadingPosition: Bool = (contentOffsetY + scrollView.frame.size.height) >= scrollView.contentSize.height
+
+        if contentOffsetY > 50 || contentOffsetY < (scrollView.frame.size.height - 50) {
+            changeFilterView(isScrollDown)
+        }
+
+        if isLoadingPosition {
+            viewModel.request()
+        }
     }
 }
 
