@@ -31,8 +31,19 @@ final class SearchTableViewCell: UITableViewCell {
             }
 
             if model.isSelected {
-                self.backgroundColor = .lightGray
+                self.backgroundColor = .lightGray.withAlphaComponent(0.2)
             }
         }
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        self.backgroundColor = .white
+        docTypeLabel.text = nil
+        nameLabel.text = nil
+        titleLabel.attributedText = nil
+        dateLabel.text = nil
+        thumbnailImageView.image = nil
     }
 }
