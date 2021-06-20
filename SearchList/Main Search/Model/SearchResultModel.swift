@@ -57,10 +57,10 @@ class DocumentModel: Decodable {
         }
         return ""
     }
-    var type: DocumentType {
+    var type: SearchTargetType {
         if cafename != nil { return .cafe }
         if blogname != nil { return .blog }
-        return .none
+        return .cafe
     }
     var isSelected: Bool = false
 }
