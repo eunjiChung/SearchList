@@ -26,6 +26,7 @@
 		B6779F01267F1C52002FDDDD /* SortListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6779F00267F1C52002FDDDD /* SortListModel.swift */; };
 		B6779F05267F1DCA002FDDDD /* SearchOperationDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6779F04267F1DCA002FDDDD /* SearchOperationDataProvider.swift */; };
 		B6779F09267F3834002FDDDD /* SearchListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6779F08267F3834002FDDDD /* SearchListProvider.swift */; };
+		B6779F0C267F4F0D002FDDDD /* LoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6779F0B267F4F0D002FDDDD /* LoadingTableViewCell.swift */; };
 		B6CFEBF8267D82D700CB74ED /* MainSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBF7267D82D700CB74ED /* MainSearchViewController.swift */; };
 		B6CFEBFA267D82E100CB74ED /* SearchDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBF9267D82E100CB74ED /* SearchDetailViewController.swift */; };
 		B6CFEBFC267D82FA00CB74ED /* DetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBFB267D82FA00CB74ED /* DetailWebViewController.swift */; };
@@ -91,6 +92,7 @@
 		B6779F00267F1C52002FDDDD /* SortListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortListModel.swift; sourceTree = "<group>"; };
 		B6779F04267F1DCA002FDDDD /* SearchOperationDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOperationDataProvider.swift; sourceTree = "<group>"; };
 		B6779F08267F3834002FDDDD /* SearchListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListProvider.swift; sourceTree = "<group>"; };
+		B6779F0B267F4F0D002FDDDD /* LoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableViewCell.swift; sourceTree = "<group>"; };
 		B6CFEBF7267D82D700CB74ED /* MainSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSearchViewController.swift; sourceTree = "<group>"; };
 		B6CFEBF9267D82E100CB74ED /* SearchDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailViewController.swift; sourceTree = "<group>"; };
 		B6CFEBFB267D82FA00CB74ED /* DetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWebViewController.swift; sourceTree = "<group>"; };
@@ -238,6 +240,19 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		B6779F0A267F4DBA002FDDDD /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				B6779EFA267F0E28002FDDDD /* AsyncOperation.swift */,
+				B6779EFC267F1083002FDDDD /* DataLoadOperation.swift */,
+				B6779F00267F1C52002FDDDD /* SortListModel.swift */,
+				B6779F04267F1DCA002FDDDD /* SearchOperationDataProvider.swift */,
+				B6779F08267F3834002FDDDD /* SearchListProvider.swift */,
+				B6CFEC1B267DC2C400CB74ED /* MainSearchViewModel.swift */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
 		B6CFEBFD267D834A00CB74ED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -290,6 +305,7 @@
 			isa = PBXGroup;
 			children = (
 				B6CFEC05267D85B200CB74ED /* SearchTableViewCell.swift */,
+				B6779F0B267F4F0D002FDDDD /* LoadingTableViewCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -332,12 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				B6779EF8267F0D16002FDDDD /* SearchViewModel.swift */,
-				B6779EFA267F0E28002FDDDD /* AsyncOperation.swift */,
-				B6779EFC267F1083002FDDDD /* DataLoadOperation.swift */,
-				B6779F00267F1C52002FDDDD /* SortListModel.swift */,
-				B6779F04267F1DCA002FDDDD /* SearchOperationDataProvider.swift */,
-				B6779F08267F3834002FDDDD /* SearchListProvider.swift */,
-				B6CFEC1B267DC2C400CB74ED /* MainSearchViewModel.swift */,
+				B6779F0A267F4DBA002FDDDD /* Operations */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -602,6 +613,7 @@
 				B66D4BCF267DC61C004D750D /* SearchResultModel.swift in Sources */,
 				B6779F01267F1C52002FDDDD /* SortListModel.swift in Sources */,
 				B6779EFB267F0E29002FDDDD /* AsyncOperation.swift in Sources */,
+				B6779F0C267F4F0D002FDDDD /* LoadingTableViewCell.swift in Sources */,
 				B6CFEC16267DB56200CB74ED /* NetworkAdapter.swift in Sources */,
 				B6CFEC06267D85B200CB74ED /* SearchTableViewCell.swift in Sources */,
 				B6CFEC08267D860200CB74ED /* CustomSearchBarView.swift in Sources */,
