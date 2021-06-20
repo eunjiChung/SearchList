@@ -30,6 +30,8 @@ class MainSearchViewController: UIViewController {
         return MainSearchViewModel()
     }()
 
+    var newViewModel: SearchViewModel!
+
     private lazy var emptyView: EmptyView = {
         let emptyView = EmptyView(frame: tableView.bounds)
         emptyView.isHidden = false
@@ -79,7 +81,12 @@ class MainSearchViewController: UIViewController {
     }
 
     private func initViewModel() {
-        viewModel.requestSearch()
+        newViewModel = SearchViewModel()
+        newViewModel.query = "아이유"
+
+        newViewModel.request()
+        
+//        viewModel.requestSearch()
 
         viewModel.didFinishRequest = { [weak self] in
             guard let self = self else { return }
