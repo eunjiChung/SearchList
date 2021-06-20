@@ -40,7 +40,6 @@
 		B6CFEC13267D966900CB74ED /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6CFEC11267D966900CB74ED /* HistoryTableViewCell.xib */; };
 		B6CFEC16267DB56200CB74ED /* NetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEC15267DB56200CB74ED /* NetworkAdapter.swift */; };
 		B6CFEC18267DB64D00CB74ED /* SearchAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEC17267DB64D00CB74ED /* SearchAPI.swift */; };
-		B6CFEC1C267DC2C400CB74ED /* MainSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEC1B267DC2C400CB74ED /* MainSearchViewModel.swift */; };
 		D25A34A1A811973F78D36BD5 /* Pods_SearchList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539E28AF1B674CFA086CFE58 /* Pods_SearchList.framework */; };
 /* End PBXBuildFile section */
 
@@ -106,7 +105,6 @@
 		B6CFEC11267D966900CB74ED /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
 		B6CFEC15267DB56200CB74ED /* NetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAdapter.swift; sourceTree = "<group>"; };
 		B6CFEC17267DB64D00CB74ED /* SearchAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPI.swift; sourceTree = "<group>"; };
-		B6CFEC1B267DC2C400CB74ED /* MainSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSearchViewModel.swift; sourceTree = "<group>"; };
 		C8D61ADDB5B7984A521FABF5 /* Pods-SearchList-SearchListUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchList-SearchListUITests.debug.xcconfig"; path = "Target Support Files/Pods-SearchList-SearchListUITests/Pods-SearchList-SearchListUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F18E2BEF511208F740E497B9 /* Pods-SearchListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchListTests.debug.xcconfig"; path = "Target Support Files/Pods-SearchListTests/Pods-SearchListTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -248,7 +246,6 @@
 				B6779F00267F1C52002FDDDD /* SortListModel.swift */,
 				B6779F04267F1DCA002FDDDD /* SearchOperationDataProvider.swift */,
 				B6779F08267F3834002FDDDD /* SearchListProvider.swift */,
-				B6CFEC1B267DC2C400CB74ED /* MainSearchViewModel.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -603,7 +600,6 @@
 				B639CBA2267D7F2100A0F141 /* AppDelegate.swift in Sources */,
 				B6CFEC12267D966900CB74ED /* HistoryTableViewCell.swift in Sources */,
 				B6CFEBFA267D82E100CB74ED /* SearchDetailViewController.swift in Sources */,
-				B6CFEC1C267DC2C400CB74ED /* MainSearchViewModel.swift in Sources */,
 				B6779EEA267DE57C002FDDDD /* String+.swift in Sources */,
 				B6779EFD267F1083002FDDDD /* DataLoadOperation.swift in Sources */,
 				B6CFEBF8267D82D700CB74ED /* MainSearchViewController.swift in Sources */,

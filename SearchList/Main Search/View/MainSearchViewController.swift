@@ -90,9 +90,6 @@ class MainSearchViewController: UIViewController {
             }
         }
     }
-
-    private func updateTable() {
-    }
 }
 
 extension MainSearchViewController: SearchViewModelDelegate {
