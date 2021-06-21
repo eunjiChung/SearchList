@@ -7,13 +7,20 @@
 
 import UIKit
 
-class MainSearchViewController: UIViewController {
+final class MainSearchViewController: UIViewController {
 
     @IBOutlet weak var filterView: FilterView!
-    @IBOutlet weak var filterViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var searchHistoryView: SearchHistoryView!
+
     @IBOutlet weak var tableView: UITableView!
 
-    let searchView = CustomSearchBarView()
+    @IBOutlet weak var filterViewHeightConstraint: NSLayoutConstraint!
+    
+    lazy var searchView: CustomSearchBarView = {
+        let searchView = CustomSearchBarView()
+        searchView.delegate = searchHistoryView
+        return searchView
+    }()
 
     var viewModel: SearchViewModel!
 
@@ -64,9 +71,6 @@ class MainSearchViewController: UIViewController {
 
     private func initViewModel() {
         viewModel = SearchViewModel(delegate: self)
-        viewModel.query = "아이유"
-
-        viewModel.request()
     }
 
     @objc func hideKeyboard() {
