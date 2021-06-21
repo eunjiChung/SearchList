@@ -9,28 +9,44 @@ import Foundation
 
 class SortListModel: Operation {
 
-    fileprivate let completion: ([DocumentModel]?) -> ()
-    fileprivate var inputList: [DocumentModel]?
+    fileprivate let completion: ReturnType?
+    fileprivate let originList: [Document]
+    fileprivate let sort: SortType
 
-    init(list: [DocumentModel]? = nil, completion: @escaping ([DocumentModel]?) -> ()) {
-        self.inputList = list
+    init(originList: [Document], sort: SortType, completion: ReturnType?) {
+        self.originList = originList
+        self.sort = sort
         self.completion = completion
+        super.init()
     }
 
     override func main() {
-        var list: [DocumentModel] = []
+        var list: [Document] = originList
+        var isCafeEnd: Bool = false
+        var isBlogEnd: Bool = false
 
         if self.isCancelled { return }
 
-        if let inputList = self.inputList {
-            list = inputList
-        } else if let provider = dependencies.first as? SearchOperationDataProvider,
-                  let fullList = provider.fullList {
-            list = fullList
+        guard let provider = dependencies.first as? SearchOperationDataProvider else { return }
+        guard provider.isDownloadFinished else { return }
+
+        if let cafeModel = provider.cafeModel as? SearchResultModel<CafeDocument> {
+            isCafeEnd = cafeModel.meta.isEnd
+            list.append(contentsOf: cafeModel.documents ?? [])
         }
 
-        // TODO: - 소팅한 후 inputList에 데이터를 넣기
-        inputList = list
-        completion(inputList)
+        if let blogModel = provider.blogModel as? SearchResultModel<BlogDocument> {
+            isBlogEnd = blogModel.meta.isEnd
+            list.append(contentsOf: blogModel.documents ?? [])
+        }
+
+        switch sort {
+        case .title:
+            // TODO: - title에 따라 소팅
+        case .datetime:
+            // TODO: - 날짜에 따라 소팅
+        }
+
+        completion?(isCafeEnd, isBlogEnd, list)
     }
 }

@@ -9,37 +9,24 @@ import Foundation
 
 class SearchOperationDataProvider: Operation {
 
-    fileprivate let completion: (() -> ())?
-
-    var cafeModel: SearchResultModel?
-    var blogModel: SearchResultModel?
-
-    var fullList: [DocumentModel]?
-
-    init(completion: (() -> ())? = nil) {
-        self.completion = completion
-        super.init()
-    }
+    var cafeModel: SearchModel?
+    var blogModel: SearchModel?
+    var isDownloadFinished: Bool = false
 
     override func main() {
         if self.isCancelled { return }
 
-        guard let dataLoaders = dependencies as? [DataLoadOperation] else { return }
-        dataLoaders.forEach { dataLoader in
-            if let cafeModel = dataLoader.cafeModel {
-                self.cafeModel = cafeModel
+        guard let dataLoaders = dependencies as? [TargetDataProvider] else { return }
+        for loader in dataLoaders {
+            if let model = loader.loadedModel as? SearchResultModel<CafeDocument> {
+                cafeModel = model
             }
-            if let blogModel = dataLoader.blogModel {
-                self.blogModel = blogModel
+
+            if let model = loader.loadedModel as? SearchResultModel<BlogDocument> {
+                blogModel = model
             }
         }
 
-        // TODO: - 둘 중 하나가 먼저 끝날 것도 예상
-        guard cafeModel != nil, blogModel != nil else { return }
-        var fullList: [DocumentModel] = self.cafeModel?.documents ?? []
-        fullList.append(contentsOf: blogModel?.documents ?? [])
-        self.fullList = fullList
-
-        completion?()
+        isDownloadFinished = dependencies.allSatisfy({ $0.isFinished })
     }
 }
