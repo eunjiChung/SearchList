@@ -308,6 +308,8 @@
 		B6CFEC04267D858900CB74ED /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				B6CFEC10267D966900CB74ED /* HistoryTableViewCell.swift */,
+				B6CFEC11267D966900CB74ED /* HistoryTableViewCell.xib */,
 				B6CFEC05267D85B200CB74ED /* SearchTableViewCell.swift */,
 				B6779F0B267F4F0D002FDDDD /* LoadingTableViewCell.swift */,
 			);
@@ -321,8 +323,6 @@
 				B6CFEC09267D860B00CB74ED /* CustomSearchBarView.xib */,
 				B6CFEC0B267D8AC100CB74ED /* FilterView.swift */,
 				B6CFEC0D267D8AD500CB74ED /* FilterView.xib */,
-				B6CFEC10267D966900CB74ED /* HistoryTableViewCell.swift */,
-				B6CFEC11267D966900CB74ED /* HistoryTableViewCell.xib */,
 				B6779EE0267DD9C6002FDDDD /* EmptyView.swift */,
 				B6779EE2267DD9D0002FDDDD /* EmptyView.xib */,
 				B68D5F372680E43000699C90 /* SearchHistoryView.swift */,
