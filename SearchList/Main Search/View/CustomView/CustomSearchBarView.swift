@@ -45,6 +45,15 @@ final class CustomSearchBarView: UIView {
     @objc func handleHistorySelection(_ notification: Notification) {
         guard let keyword = notification.object as? String else { return }
         searchBar.text = keyword
+        search()
+    }
+
+    @IBAction func searchButtonTouched(_ sender: Any) {
+        search()
+    }
+
+    private func search() {
+        guard let keyword = searchBar.text else { return }
         searchKeyword?(keyword)
         delegate?.searchButtonClicked(by: keyword)
     }
@@ -57,9 +66,7 @@ extension CustomSearchBarView: UISearchBarDelegate {
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let keyword = searchBar.text else { return }
-        searchKeyword?(keyword)
-        delegate?.searchButtonClicked(by: keyword)
+        search()
     }
 }
 

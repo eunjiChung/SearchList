@@ -37,6 +37,9 @@
                     <state key="normal" title="검색">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
+                    <connections>
+                        <action selector="searchButtonTouched:" destination="-1" eventType="touchUpInside" id="zTQ-f3-9Mw"/>
+                    </connections>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
