@@ -12,10 +12,5 @@ final class HistoryTableViewCell: UITableViewCell {
     static let id = "HistoryTableViewCell"
 
     @IBOutlet weak var titleLabel: UILabel!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
     
 }

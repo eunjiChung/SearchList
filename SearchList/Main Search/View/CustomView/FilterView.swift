@@ -60,6 +60,11 @@ final class FilterView: UIView {
 
     private func initView() {
         filterListView.isHidden = true
+
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = 0.1
+        self.layer.shadowOffset = .zero
+        self.layer.shadowRadius = 2
     }
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
