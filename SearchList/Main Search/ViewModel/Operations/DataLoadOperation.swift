@@ -13,17 +13,16 @@ enum SearchTargetType: String {
 }
 
 protocol TargetDataProvider {
-    var cafeModel: SearchResultModel? { get }
-    var blogModel: SearchResultModel? { get }
+    var loadedModel: SearchModel? { get set }
 }
 
-class DataLoadOperation: AsyncOperation {
-
+class DataLoadOperation<Element: Decodable>: AsyncOperation, TargetDataProvider {
+    
     fileprivate let target: SearchTargetType
     fileprivate let query: String
     fileprivate let page: Int
     fileprivate let failure: (() -> Void)?
-    fileprivate var loadedModel: SearchResultModel?
+    internal var loadedModel: SearchModel?
 
     init(target: SearchTargetType, query: String, page: Int, failure: (() -> Void)? = nil) {
         self.target = target
@@ -42,7 +41,7 @@ class DataLoadOperation: AsyncOperation {
             if self.isCancelled { return }
 
             do {
-                let model = try JSONDecoder().decode(SearchResultModel.self, from: response.data)
+                let model = try JSONDecoder().decode(SearchResultModel<Element>.self, from: response.data)
                 self.loadedModel = model
                 self.state = .Finished
             } catch {
@@ -59,17 +58,5 @@ class DataLoadOperation: AsyncOperation {
             self.state = .Finished
             self.failure?()
         }
-    }
-}
-
-extension DataLoadOperation: TargetDataProvider {
-    var cafeModel: SearchResultModel? {
-        guard let loadedModel = self.loadedModel else { return nil }
-        return target == .cafe ? loadedModel : nil
-    }
-
-    var blogModel: SearchResultModel? {
-        guard let loadedModel = self.loadedModel else { return nil }
-        return target == .blog ? loadedModel : nil
     }
 }

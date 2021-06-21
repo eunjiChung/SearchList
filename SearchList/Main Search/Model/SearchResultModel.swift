@@ -7,30 +7,24 @@
 
 import Foundation
 
-struct SearchResultModel: Decodable {
+struct SearchResultModel<T: Decodable>: Decodable, SearchModel {
+    private enum CodingKeys: String, CodingKey {
+        case meta
+        case documents
+    }
+
     var meta: MetaModel
-    var documents: [DocumentModel]?
+    var documents: [T]?
 }
 
 struct MetaModel: Decodable {
     private enum CodingKeys: String, CodingKey {
         case isEnd = "is_end"
-        case pageableCount = "pageable_count"
-        case totalCount = "total_count"
     }
-
     var isEnd: Bool
-    var pageableCount: Int
-    var totalCount: Int
 }
 
-enum DocumentType: String {
-    case none
-    case cafe
-    case blog
-}
-
-class DocumentModel: Decodable {
+class CafeDocument: Document, Decodable {
     private enum CodingKeys: String, CodingKey {
         case title
         case thumbnail
@@ -38,7 +32,6 @@ class DocumentModel: Decodable {
         case datetime
         case url
         case cafename
-        case blogname
     }
 
     var title: String
@@ -47,20 +40,30 @@ class DocumentModel: Decodable {
     var datetime: String
     var url: String
     var cafename: String?
+
+    var name: String? { return cafename }
+    var type: SearchTargetType { return .cafe }
+    var isSelected: Bool = false
+}
+
+class BlogDocument: Document, Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case title
+        case thumbnail
+        case contents
+        case datetime
+        case url
+        case blogname
+    }
+
+    var title: String
+    var thumbnail: String
+    var contents: String
+    var datetime: String
+    var url: String
     var blogname: String?
 
-    var name: String {
-        if let cafename = cafename {
-            return cafename
-        } else if let blogname = blogname {
-            return blogname
-        }
-        return ""
-    }
-    var type: SearchTargetType {
-        if cafename != nil { return .cafe }
-        if blogname != nil { return .blog }
-        return .cafe
-    }
+    var name: String? { return blogname }
+    var type: SearchTargetType { return .blog }
     var isSelected: Bool = false
 }
