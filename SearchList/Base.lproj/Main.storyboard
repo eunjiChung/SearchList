@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bCj-il-Q8e">
-                                <rect key="frame" x="0.0" y="138" width="414" height="724"/>
+                                <rect key="frame" x="0.0" y="136" width="414" height="726"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchTableViewCell" id="Zvu-mG-Jpc" customClass="SearchTableViewCell" customModule="SearchList" customModuleProvider="target">
@@ -130,10 +130,17 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bq3-xw-K2G" customClass="FilterView" customModule="SearchList" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="88" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="48"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="vWT-cD-WDR"/>
+                                    <constraint firstAttribute="height" constant="48" id="vWT-cD-WDR"/>
+                                </constraints>
+                            </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ocs-Mw-hLi" customClass="SearchHistoryView" customModule="SearchList" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="88" width="364" height="200"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="6Zb-Bo-fKp"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -142,6 +149,9 @@
                         <constraints>
                             <constraint firstAttribute="bottomMargin" secondItem="bCj-il-Q8e" secondAttribute="bottom" id="6kS-id-zE5"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bq3-xw-K2G" secondAttribute="trailing" id="D3o-uF-Egk"/>
+                            <constraint firstItem="Ocs-Mw-hLi" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="EPY-7V-l9Z"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ocs-Mw-hLi" secondAttribute="trailing" constant="50" id="Ojf-yd-veG"/>
+                            <constraint firstItem="Ocs-Mw-hLi" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="eP2-fG-ZxX"/>
                             <constraint firstItem="bCj-il-Q8e" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fcb-Pl-sDG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bCj-il-Q8e" secondAttribute="trailing" id="ini-pJ-TrA"/>
                             <constraint firstItem="bq3-xw-K2G" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="lLe-7I-Fau"/>
@@ -153,6 +163,7 @@
                     <connections>
                         <outlet property="filterView" destination="bq3-xw-K2G" id="haa-U6-Vtv"/>
                         <outlet property="filterViewHeightConstraint" destination="vWT-cD-WDR" id="R2g-hw-YWl"/>
+                        <outlet property="searchHistoryView" destination="Ocs-Mw-hLi" id="auy-Mj-Uje"/>
                         <outlet property="tableView" destination="bCj-il-Q8e" id="8Qa-TG-JSE"/>
                         <segue destination="UYu-Zc-0R4" kind="show" identifier="showDetail" id="49s-cx-NR6"/>
                     </connections>
@@ -361,6 +372,8 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="s4n-bt-o1f">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.0" green="0.56862745100000001" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
