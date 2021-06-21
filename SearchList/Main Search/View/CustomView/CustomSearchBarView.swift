@@ -20,17 +20,33 @@ final class CustomSearchBarView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
+        initNotification()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        commonInit()
+        initNotification()
     }
 
     private func commonInit() {
         let view = Bundle.main.loadNibNamed(xibName, owner: self, options: nil)?.first as! UIView
         view.frame = self.bounds
         addSubview(view)
+    }
+
+    private func initNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleHistorySelection(_:)), name: .historyKeywordSelected, object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .historyKeywordSelected, object: nil)
+    }
+
+    @objc func handleHistorySelection(_ notification: Notification) {
+        guard let keyword = notification.object as? String else { return }
+        searchBar.text = keyword
+        searchKeyword?(keyword)
+        delegate?.searchButtonClicked(by: keyword)
     }
 }
 
@@ -46,5 +62,4 @@ extension CustomSearchBarView: UISearchBarDelegate {
         delegate?.searchButtonClicked(by: keyword)
     }
 }
-
 

@@ -12,7 +12,11 @@ protocol SearchHistoryDelegate {
     func searchButtonClicked(by keyword: String)
 }
 
-class SearchHistoryView: UIView {
+extension Notification.Name {
+    static let historyKeywordSelected = Notification.Name("historyKeywordSelected")
+}
+
+final class SearchHistoryView: UIView {
 
     private let xibName = "SearchHistoryView"
 
@@ -57,11 +61,13 @@ class SearchHistoryView: UIView {
 
 extension SearchHistoryView: SearchHistoryDelegate {
     func searchBegin() {
-        guard !searchHistory.isEmpty else { return }
-        self.isHidden = false
+        self.isHidden = searchHistory.isEmpty
     }
 
     func searchButtonClicked(by keyword: String) {
+        if let index = searchHistory.firstIndex(of: keyword) {
+            searchHistory.remove(at: index)
+        }
         searchHistory.insert(keyword, at: searchHistory.startIndex)
         self.isHidden = true
     }
@@ -81,7 +87,7 @@ extension SearchHistoryView: UITableViewDataSource {
 
 extension SearchHistoryView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        NotificationCenter.default.post(name: .historyKeywordSelected, object: searchHistory[indexPath.row])
     }
 }
 
