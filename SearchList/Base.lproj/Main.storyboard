@@ -129,7 +129,7 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="fxt-fC-G0B"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bq3-xw-K2G">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bq3-xw-K2G" customClass="FilterView" customModule="SearchList" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="414" height="50"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -151,7 +151,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="b9D-Iy-UlC"/>
                     <connections>
-                        <outlet property="filterView" destination="bq3-xw-K2G" id="xbO-cO-cYV"/>
+                        <outlet property="filterView" destination="bq3-xw-K2G" id="haa-U6-Vtv"/>
                         <outlet property="filterViewHeightConstraint" destination="vWT-cD-WDR" id="R2g-hw-YWl"/>
                         <outlet property="tableView" destination="bCj-il-Q8e" id="8Qa-TG-JSE"/>
                         <segue destination="UYu-Zc-0R4" kind="show" identifier="showDetail" id="49s-cx-NR6"/>

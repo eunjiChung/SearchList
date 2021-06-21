@@ -9,15 +9,11 @@ import UIKit
 
 class MainSearchViewController: UIViewController {
 
-    @IBOutlet weak var filterView: UIView!
+    @IBOutlet weak var filterView: FilterView!
     @IBOutlet weak var filterViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
 
     let searchView = CustomSearchBarView()
-
-    lazy var customFilterView = {
-        return FilterView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: filterView.frame.height))
-    }()
 
     var viewModel: SearchViewModel!
 
@@ -40,19 +36,17 @@ class MainSearchViewController: UIViewController {
         tableView.backgroundView = emptyView
         tableView.estimatedRowHeight = 122.0
 
-        filterView.addSubview(customFilterView)
-
         searchView.searchKeyword = { [weak self] keyword in
             guard let self = self else { return }
             self.tableView.reloadData()
             self.hideKeyboard()
         }
 
-        customFilterView.selectFilter = { [weak self] type in
+        filterView.selectFilter = { [weak self] type in
             guard let self = self else { return }
-            self.tableView.reloadData()
+            self.viewModel.filter = type
         }
-        customFilterView.touchSortButton = {
+        filterView.touchSortButton = {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let titleButton = UIAlertAction(title: "Title", style: .default) { _ in self.viewModel.sort = .title }
             let dateButton = UIAlertAction(title: "Date", style: .default) { _ in self.viewModel.sort = .datetime }
