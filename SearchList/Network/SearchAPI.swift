@@ -32,7 +32,7 @@ extension SearchAPI: TargetType {
     var task: Task {
         switch self {
         case .search(_, let query, let page):
-            let param: [String: Any] = ["query": query, "page": page, "size": 25]
+            let param: [String: Any] = ["query": query, "sort": "recency", "page": page, "size": 25]
             return .requestParameters(parameters: param, encoding: URLEncoding.default)
         }
     }
