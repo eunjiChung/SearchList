@@ -40,6 +40,12 @@ extension String {
         dateFormatter.locale = Locale(identifier:"ko_KR")
         return dateFormatter.string(from: givenDate)
     }
+
+    var toDate: Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXX"
+        return dateFormatter.date(from: self)
+    }
 }
 
 extension Date {
