@@ -16,7 +16,11 @@ final class SearchViewModel {
 
     var query: String?
 
-    var filter: FilterType = .all 
+    var filter: FilterType = .all {
+        didSet {
+            filterList()
+        }
+    }
 
     var sort: SortType = .title
 
@@ -24,9 +28,19 @@ final class SearchViewModel {
 
     var isEnd: Bool { return isCafeEnd && isBlogEnd }
 
-    var list: [Document] = []
+    var exposingList: [Document] {
+        switch filter {
+        case .all:      return list
+        case .cafe:     return list.compactMap({ $0 as? CafeDocument })
+        case .blog:     return list.compactMap({ $0 as? BlogDocument })
+        }
+    }
 
-    var rowCount: Int { return list.count + (isEnd ? 0 : 1) }
+    private var list: [Document] = []
+
+    var isListEmpty: Bool { return exposingList.count == 0 }
+    var listCount: Int { return exposingList.count }
+    var rowCount: Int { return exposingList.count + (isEnd ? 0 : 1) }
 
     var deleteIndex: Int = 0
 
@@ -72,9 +86,18 @@ final class SearchViewModel {
         }
     }
 
+    private func filterList() {
+        self.delegate?.onFetchCompleted(with: .none, completion: nil)
+    }
+
     private func loadingIndexPaths(from newList: [Document]) -> [IndexPath]? {
-        let startIndex = list.count
-        let endIndex = newList.count
+        let startIndex = listCount
+        let endIndex: Int
+        switch filter {
+        case .all:      endIndex = newList.count
+        case .cafe:     endIndex = newList.compactMap({ $0 as? CafeDocument }).count
+        case .blog:     endIndex = newList.compactMap({ $0 as? BlogDocument }).count
+        }
         deleteIndex = startIndex
         return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
     }

@@ -82,7 +82,7 @@ class MainSearchViewController: UIViewController {
 
     private func reloadTable(_ completion: (() -> Void)?) {
         DispatchQueue.main.async {
-            self.emptyView.isHidden = self.viewModel.list.count > 0
+            self.emptyView.isHidden = self.viewModel.isListEmpty
             self.tableView.reloadData()
 
             if self.tableView.refreshControl?.isRefreshing ?? false {
@@ -134,7 +134,7 @@ extension MainSearchViewController: UITableViewDataSource {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.id, for: indexPath) as! SearchTableViewCell
-            cell.model = viewModel.list[indexPath.row]
+            cell.model = viewModel.exposingList[indexPath.row]
             return cell
         }
     }
@@ -146,7 +146,7 @@ extension MainSearchViewController: UITableViewDataSource {
 
 extension MainSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showDetail", sender: viewModel.list[indexPath.row])
+        performSegue(withIdentifier: "showDetail", sender: viewModel.exposingList[indexPath.row])
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
