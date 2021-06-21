@@ -52,7 +52,7 @@ final class SearchViewModel {
 
     private var page: Int = 0
 
-    private var isFirstPage: Bool { return page == 1 }
+    var isFirstPage: Bool { return page == 1 }
 
     private var isCafeEnd: Bool = false
     private var isBlogEnd: Bool = false

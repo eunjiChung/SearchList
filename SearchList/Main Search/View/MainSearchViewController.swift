@@ -36,7 +36,10 @@ class MainSearchViewController: UIViewController {
 
     private func initView() {
         navigationItem.titleView = searchView
+
         tableView.backgroundView = emptyView
+        tableView.estimatedRowHeight = 122.0
+
         filterView.addSubview(customFilterView)
 
         searchView.searchKeyword = { [weak self] keyword in
@@ -79,11 +82,18 @@ class MainSearchViewController: UIViewController {
     private func reloadTable(_ completion: (() -> Void)?) {
         DispatchQueue.main.async {
             self.emptyView.isHidden = self.viewModel.isListEmpty
-            self.tableView.reloadData()
+
+            if self.viewModel.isFirstPage {
+                self.tableView.reloadData()
+            } else {
+                self.tableView.reloadRows(at: self.tableView.indexPathsForVisibleRows ?? [], with: .none)
+            }
 
             if self.tableView.refreshControl?.isRefreshing ?? false {
                 self.tableView.refreshControl?.endRefreshing()
             }
+
+            self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
 
             completion?()
         }
