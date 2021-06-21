@@ -40,13 +40,11 @@ class SortListModel: Operation {
             list.append(contentsOf: blogModel.documents ?? [])
         }
 
+        let sortedList: [Document]
         switch sort {
-        case .title:
-            // TODO: - title에 따라 소팅
-        case .datetime:
-            // TODO: - 날짜에 따라 소팅
+        case .title:        sortedList = list.sorted { $0.isAscendingTo($1) }
+        case .datetime:     sortedList = list.sorted { $0.isRecentTo($1) }
         }
-
-        completion?(isCafeEnd, isBlogEnd, list)
+        completion?(isCafeEnd, isBlogEnd, sortedList)
     }
 }
