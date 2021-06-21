@@ -26,7 +26,7 @@ final class MainSearchViewController: UIViewController {
 
     private lazy var emptyView: EmptyView = {
         let emptyView = EmptyView(frame: tableView.bounds)
-        emptyView.isHidden = true
+        emptyView.isHidden = false
         return emptyView
     }()
 
@@ -79,7 +79,7 @@ final class MainSearchViewController: UIViewController {
 
     private func reloadTable(_ completion: (() -> Void)?) {
         DispatchQueue.main.async {
-            self.emptyView.isHidden = self.viewModel.isListEmpty
+            self.emptyView.isHidden = !self.viewModel.isListEmpty
 
             if self.viewModel.isFirstPage {
                 self.tableView.reloadData()
@@ -91,7 +91,9 @@ final class MainSearchViewController: UIViewController {
                 self.tableView.refreshControl?.endRefreshing()
             }
 
-            self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            if !self.viewModel.isListEmpty {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
 
             completion?()
         }
@@ -173,6 +175,7 @@ extension MainSearchViewController: UITableViewDelegate {
     }
 
     private func changeFilterView(_ isScrollDown: Bool) {
+        guard !viewModel.isListEmpty else { return }
         if filterView.isHidden && isScrollDown { return }
         filterView.isHidden = isScrollDown
         filterViewHeightConstraint.constant = isScrollDown ? 0 : 50

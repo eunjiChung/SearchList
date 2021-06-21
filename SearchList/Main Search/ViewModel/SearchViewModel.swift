@@ -51,7 +51,9 @@ final class SearchViewModel {
 
     var isListEmpty: Bool { return exposingList.count == 0 }
     var listCount: Int { return exposingList.count }
-    var rowCount: Int { return exposingList.count + (isEnd ? 0 : 1) }
+    var rowCount: Int {
+        return isListEmpty ? 0 : exposingList.count + (isEnd ? 0 : 1)
+    }
 
     var deleteIndex: Int = 0
 
@@ -74,7 +76,7 @@ final class SearchViewModel {
     }
 
     func request() {
-        guard !isEnd && isWaiting else { return }
+        guard !query.isEmpty && !isEnd && isWaiting else { return }
 
         isWaiting = false
 

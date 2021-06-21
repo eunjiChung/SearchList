@@ -11,6 +11,8 @@ final class EmptyView: UIView {
 
     private let xibName = "EmptyView"
 
+    @IBOutlet weak var contentLabel: UILabel!
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -25,5 +27,9 @@ final class EmptyView: UIView {
         let view = Bundle.main.loadNibNamed(xibName, owner: self, options: nil)?.first as! UIView
         view.frame = self.bounds
         addSubview(view)
+    }
+
+    func showEmptyView() {
+        contentLabel.text = "검색 결과가 없습니다"
     }
 }
