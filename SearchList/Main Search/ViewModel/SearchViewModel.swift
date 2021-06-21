@@ -20,11 +20,17 @@ final class SearchViewModel {
 
     var hasMore: Bool = true
 
-    var list: [DocumentModel] = []
+    var list: [Document] = []
+
+    var isCafeEnd: Bool = false
+    var isBlogEnd: Bool = false
 
     var rowCount: Int { return list.count + (hasMore ? 1 : 0) }
 
+    var sort: SortType = .title
+
     private var page: Int = 0
+
     private var isFirstLoad: Bool { return page == 0 }
 
     private weak var delegate: SearchViewModelDelegate?
@@ -42,12 +48,18 @@ final class SearchViewModel {
 
         page += 1
 
-        _ = SearchListProvider(query: query!, page: page) { model in
+        _ = SearchListProvider(originList: list,
+                               sort: sort,
+                               query: query!,
+                               page: page) { isCafeEnd, isBlogEnd, newList in
+            self.isCafeEnd = isCafeEnd
+            self.isBlogEnd = isBlogEnd
+
             // TODO: - 새로 sorting한 list 집어넣기
-            self.list.append(contentsOf: model)
+            self.list = newList
 
             if self.page > 1 {
-                self.delegate?.onFetchCompleted(with: self.list.count-model.count, indexPaths: self.loadingIndexPaths(from: model))
+                self.delegate?.onFetchCompleted(with: self.list.count-newList.count, indexPaths: self.loadingIndexPaths(from: newList))
             } else {
                 self.delegate?.onFetchCompleted(with: 0, indexPaths: nil)
             }
@@ -56,7 +68,7 @@ final class SearchViewModel {
         }
     }
 
-    private func loadingIndexPaths(from givenList: [DocumentModel]) -> [IndexPath]? {
+    private func loadingIndexPaths(from givenList: [Document]) -> [IndexPath]? {
         let startIndex = list.count - givenList.count
         let endIndex = startIndex + givenList.count
         return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }

@@ -171,7 +171,7 @@ extension MainSearchViewController: UITableViewDelegate {
 extension MainSearchViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? SearchDetailViewController,
-           let model = sender as? DocumentModel {
+           let model = sender as? Document {
             dest.viewModel.documentModel = model
         }
     }

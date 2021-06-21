@@ -9,5 +9,5 @@ import Foundation
 
 final class SearchDetailViewModel {
 
-    var documentModel: DocumentModel?
+    var documentModel: Document?
 }

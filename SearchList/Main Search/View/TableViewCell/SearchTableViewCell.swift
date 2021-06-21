@@ -18,7 +18,7 @@ final class SearchTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var thumbnailImageView: UIImageView!
 
-    var model: DocumentModel? {
+    var model: Document? {
         didSet {
             guard let model = model else { return }
             docTypeLabel.text = model.type.rawValue
