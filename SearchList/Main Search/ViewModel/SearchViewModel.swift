@@ -14,7 +14,12 @@ protocol SearchViewModelDelegate: AnyObject {
 
 final class SearchViewModel {
 
-    var query: String?
+    var query: String = "" {
+        didSet {
+            refreshList()
+            request()
+        }
+    }
 
     var filter: FilterType = .all {
         didSet {
@@ -63,6 +68,11 @@ final class SearchViewModel {
         self.delegate = delegate
     }
 
+    private func refreshList() {
+        page = 0
+        list = []
+    }
+
     func request() {
         guard !isEnd && isWaiting else { return }
 
@@ -74,7 +84,7 @@ final class SearchViewModel {
 
         _ = SearchListProvider(originList: list,
                                sort: sort,
-                               query: query!,
+                               query: query,
                                page: page) { isCafeEnd, isBlogEnd, newList in
             self.isCafeEnd = isCafeEnd
             self.isBlogEnd = isBlogEnd

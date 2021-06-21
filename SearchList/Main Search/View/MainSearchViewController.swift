@@ -45,7 +45,7 @@ final class MainSearchViewController: UIViewController {
 
         searchView.searchKeyword = { [weak self] keyword in
             guard let self = self else { return }
-            self.tableView.reloadData()
+            self.viewModel.query = keyword
             self.hideKeyboard()
         }
 
@@ -151,6 +151,11 @@ extension MainSearchViewController: UITableViewDataSource {
 extension MainSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "showDetail", sender: viewModel.exposingList[indexPath.row])
+    }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchHistoryView.isHidden = true
+        filterView.filterListView.isHidden = true
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
