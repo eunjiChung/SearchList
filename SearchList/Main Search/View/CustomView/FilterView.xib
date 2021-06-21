@@ -11,10 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterView" customModule="SearchList" customModuleProvider="target">
             <connections>
-                <outlet property="allButton" destination="p22-ta-sQe" id="gj3-Xv-3b5"/>
-                <outlet property="blogButton" destination="z2w-lW-Q38" id="gf8-Rl-Zgh"/>
-                <outlet property="cafeButton" destination="LEw-og-3qy" id="jl3-TX-OqC"/>
-                <outlet property="currentFilterButton" destination="9Bl-rW-ZTB" id="bFc-El-lem"/>
+                <outlet property="filterLabel" destination="Q6O-51-Spg" id="lg5-W1-HqC"/>
                 <outlet property="filterListView" destination="nVv-yW-wIn" id="ZLQ-iI-Evw"/>
                 <outlet property="filterViewTopConstraint" destination="IhE-Cl-ala" id="kYG-C7-ECf"/>
                 <outletCollection property="filterButtons" destination="p22-ta-sQe" collectionClass="NSMutableArray" id="Kef-Bl-Rc4"/>
@@ -27,11 +24,17 @@
             <rect key="frame" x="0.0" y="0.0" width="534" height="288"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ALL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q6O-51-Spg">
+                    <rect key="frame" x="0.0" y="0.0" width="246" height="288"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Bl-rW-ZTB">
                     <rect key="frame" x="0.0" y="0.0" width="246" height="288"/>
-                    <color key="backgroundColor" red="0.0" green="0.56862745100000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <state key="normal" title="All">
+                    <state key="normal">
                         <color key="titleColor" red="0.050980392159999999" green="0.050980392159999999" blue="0.050980392159999999" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -101,12 +104,16 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="9Bl-rW-ZTB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="0rv-nh-RFx"/>
+                <constraint firstItem="Q6O-51-Spg" firstAttribute="leading" secondItem="9Bl-rW-ZTB" secondAttribute="leading" id="1jE-FM-5j9"/>
                 <constraint firstItem="6u7-OB-qzT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="3re-Hg-mLX"/>
                 <constraint firstItem="6u7-OB-qzT" firstAttribute="leading" secondItem="9Bl-rW-ZTB" secondAttribute="trailing" id="59M-CJ-We7"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="6u7-OB-qzT" secondAttribute="trailing" id="HMs-CS-AAQ"/>
                 <constraint firstItem="nVv-yW-wIn" firstAttribute="top" secondItem="9Bl-rW-ZTB" secondAttribute="bottom" id="IhE-Cl-ala"/>
                 <constraint firstItem="9Bl-rW-ZTB" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="K0I-Al-aun"/>
+                <constraint firstItem="Q6O-51-Spg" firstAttribute="bottom" secondItem="9Bl-rW-ZTB" secondAttribute="bottom" id="QKI-B2-RJ2"/>
                 <constraint firstItem="nVv-yW-wIn" firstAttribute="leading" secondItem="9Bl-rW-ZTB" secondAttribute="leading" id="R0H-SL-axn"/>
+                <constraint firstItem="Q6O-51-Spg" firstAttribute="top" secondItem="9Bl-rW-ZTB" secondAttribute="top" id="TmA-Nw-xV1"/>
+                <constraint firstItem="Q6O-51-Spg" firstAttribute="trailing" secondItem="9Bl-rW-ZTB" secondAttribute="trailing" id="Ttt-jN-4nN"/>
                 <constraint firstItem="nVv-yW-wIn" firstAttribute="trailing" secondItem="9Bl-rW-ZTB" secondAttribute="trailing" id="VBJ-sq-ZoB"/>
                 <constraint firstAttribute="bottom" secondItem="6u7-OB-qzT" secondAttribute="bottom" id="jwv-b0-HRU"/>
                 <constraint firstAttribute="bottom" secondItem="9Bl-rW-ZTB" secondAttribute="bottom" id="sl7-eM-QOv"/>

@@ -30,18 +30,15 @@ final class FilterView: UIView {
 
     private let xibName = "FilterView"
 
-    @IBOutlet weak var currentFilterButton: UIButton!
     @IBOutlet weak var filterListView: UIView!
-
-    @IBOutlet weak var allButton: UIButton!
-    @IBOutlet weak var blogButton: UIButton!
-    @IBOutlet weak var cafeButton: UIButton!
-
+    @IBOutlet weak var filterLabel: UILabel!
     @IBOutlet var filterButtons: [UIButton]!
     @IBOutlet weak var filterViewTopConstraint: NSLayoutConstraint!
 
     var touchSortButton: (() -> Void)?
     var selectFilter: ((FilterType) -> Void)?
+
+    var isFilterSelected: Bool = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -62,14 +59,13 @@ final class FilterView: UIView {
     }
 
     private func initView() {
-        currentFilterButton.isSelected = false
         filterListView.isHidden = true
     }
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         guard isUserInteractionEnabled || !isHidden || alpha > 0.01 else { return nil }
 
-        let touchRect = currentFilterButton.isSelected ? bounds.insetBy(dx: 0, dy: -150) : bounds.inset(by: .zero)
+        let touchRect = isFilterSelected ? bounds.insetBy(dx: 0, dy: -150) : bounds.inset(by: .zero)
         guard touchRect.contains(point) else { return nil }
 
         for button in filterButtons {
@@ -83,12 +79,12 @@ final class FilterView: UIView {
     }
 
     @IBAction func touchFilterButton(_ sender: UIButton) {
-        currentFilterButton.isSelected = !currentFilterButton.isSelected
-        filterListView.isHidden = !sender.isSelected
+        isFilterSelected = !isFilterSelected
+        filterListView.isHidden = !isFilterSelected
     }
 
     @IBAction func selectFilter(_ sender: UIButton) {
-        currentFilterButton.setTitle(FilterType(rawValue: sender.tag)?.title, for: .normal)
+        filterLabel.text = FilterType(rawValue: sender.tag)?.title
         selectFilter?(FilterType(rawValue: sender.tag) ?? .all)
         filterListView.isHidden = true
     }
