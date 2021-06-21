@@ -16,6 +16,8 @@ final class SearchViewModel {
 
     var query: String?
 
+    var filter: FilterType = .all 
+
     var sort: SortType = .title
 
     var isWaiting: Bool = true
