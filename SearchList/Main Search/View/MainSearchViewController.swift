@@ -80,7 +80,7 @@ class MainSearchViewController: UIViewController {
         searchView.endEditing(true)
     }
 
-    private func reloadTable() {
+    private func reloadTable(_ completion: (() -> Void)?) {
         DispatchQueue.main.async {
             self.emptyView.isHidden = self.viewModel.list.count > 0
             self.tableView.reloadData()
@@ -88,35 +88,37 @@ class MainSearchViewController: UIViewController {
             if self.tableView.refreshControl?.isRefreshing ?? false {
                 self.tableView.refreshControl?.endRefreshing()
             }
+
+            completion?()
         }
     }
 }
 
 extension MainSearchViewController: SearchViewModelDelegate {
-    func onFetchCompleted(with startIndex: Int, indexPaths: [IndexPath]?) {
-        defer { viewModel.isWaiting = true }
-
+    func onFetchCompleted(with indexPaths: [IndexPath]?, completion: (() -> Void)?) {
         guard let newIndexPaths = indexPaths else {
-            reloadTable()
+            reloadTable { completion?() }
             return
         }
 
         DispatchQueue.main.async {
-            self.tableView.performBatchUpdates({
-                if !self.viewModel.hasMore {
-                    self.tableView.deleteRows(at: [IndexPath(row: startIndex, section: 0)], with: .fade)
+            self.tableView.performBatchUpdates {
+                if self.viewModel.isEnd {
+                    self.tableView.deleteRows(at: [IndexPath(row: self.viewModel.deleteIndex, section: 0)], with: .fade)
                 }
                 self.tableView.insertRows(at: newIndexPaths, with: .fade)
-            })
+            } completion: { _ in
+                completion?()
+            }
         }
     }
 
-    func onFetchFailed() {
+    func onFetchFailed(completion: (() -> Void)?) {
         let alert = UIAlertController(title: "알림", message: "데이터 가져오기에 실패했습니다", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
 
-        viewModel.isWaiting = true
+        completion?()
     }
 }
 
@@ -138,7 +140,7 @@ extension MainSearchViewController: UITableViewDataSource {
     }
 
     private func isLoadingPosition(of indexPath: IndexPath) -> Bool {
-        return viewModel.hasMore && indexPath.row == viewModel.rowCount-1
+        return !viewModel.isEnd && indexPath.row == viewModel.rowCount-1
     }
 }
 

@@ -8,30 +8,32 @@
 import Foundation
 
 protocol SearchViewModelDelegate: AnyObject {
-    func onFetchCompleted(with startIndex: Int, indexPaths: [IndexPath]?)
-    func onFetchFailed()
+    func onFetchCompleted(with indexPaths: [IndexPath]?, completion: (() -> Void)?)
+    func onFetchFailed(completion: (() -> Void)?)
 }
 
 final class SearchViewModel {
 
     var query: String?
 
-    var isWaiting: Bool = false
+    var sort: SortType = .title
 
-    var hasMore: Bool = true
+    var isWaiting: Bool = true
+
+    var isEnd: Bool { return isCafeEnd && isBlogEnd }
 
     var list: [Document] = []
 
-    var isCafeEnd: Bool = false
-    var isBlogEnd: Bool = false
+    var rowCount: Int { return list.count + (isEnd ? 0 : 1) }
 
-    var rowCount: Int { return list.count + (hasMore ? 1 : 0) }
-
-    var sort: SortType = .title
+    var deleteIndex: Int = 0
 
     private var page: Int = 0
 
-    private var isFirstLoad: Bool { return page == 0 }
+    private var isFirstPage: Bool { return page == 1 }
+
+    private var isCafeEnd: Bool = false
+    private var isBlogEnd: Bool = false
 
     private weak var delegate: SearchViewModelDelegate?
 
@@ -40,13 +42,13 @@ final class SearchViewModel {
     }
 
     func request() {
-        if !isFirstLoad {
-            guard hasMore && isWaiting else { return }
-        }
+        guard !isEnd && isWaiting else { return }
 
         isWaiting = false
 
         page += 1
+
+        let waitingCompletion = { self.isWaiting = true }
 
         _ = SearchListProvider(originList: list,
                                sort: sort,
@@ -55,22 +57,23 @@ final class SearchViewModel {
             self.isCafeEnd = isCafeEnd
             self.isBlogEnd = isBlogEnd
 
-            // TODO: - 새로 sorting한 list 집어넣기
-            self.list = newList
-
-            if self.page > 1 {
-                self.delegate?.onFetchCompleted(with: self.list.count-newList.count, indexPaths: self.loadingIndexPaths(from: newList))
+            if self.isFirstPage {
+                self.list = newList
+                self.delegate?.onFetchCompleted(with: .none, completion: waitingCompletion)
             } else {
-                self.delegate?.onFetchCompleted(with: 0, indexPaths: nil)
+                let newIndexPaths = self.loadingIndexPaths(from: newList)
+                self.list = newList
+                self.delegate?.onFetchCompleted(with: newIndexPaths, completion: waitingCompletion)
             }
         } failure: {
-            self.delegate?.onFetchFailed()
+            self.delegate?.onFetchFailed(completion: waitingCompletion)
         }
     }
 
-    private func loadingIndexPaths(from givenList: [Document]) -> [IndexPath]? {
-        let startIndex = list.count - givenList.count
-        let endIndex = startIndex + givenList.count
+    private func loadingIndexPaths(from newList: [Document]) -> [IndexPath]? {
+        let startIndex = list.count
+        let endIndex = newList.count
+        deleteIndex = startIndex
         return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
     }
 }
