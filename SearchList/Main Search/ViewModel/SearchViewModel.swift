@@ -18,11 +18,17 @@ final class SearchViewModel {
 
     var filter: FilterType = .all {
         didSet {
+            if oldValue == filter { return }
             filterList()
         }
     }
 
-    var sort: SortType = .title
+    var sort: SortType = .title {
+        didSet {
+            if oldValue == sort { return }
+            sortList()
+        }
+    }
 
     var isWaiting: Bool = true
 
@@ -87,6 +93,16 @@ final class SearchViewModel {
     }
 
     private func filterList() {
+        self.delegate?.onFetchCompleted(with: .none, completion: nil)
+    }
+
+    private func sortList() {
+        switch sort {
+        case .title:
+            list.sort { $0.isAscendingTo($1) }
+        case .datetime:
+            list.sort { $0.isRecentTo($1) }
+        }
         self.delegate?.onFetchCompleted(with: .none, completion: nil)
     }
 

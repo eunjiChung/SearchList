@@ -51,12 +51,8 @@ class MainSearchViewController: UIViewController {
         }
         customFilterView.touchSortButton = {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let titleButton = UIAlertAction(title: "Title", style: .default) { _ in
-                self.tableView.reloadData()
-            }
-            let dateButton = UIAlertAction(title: "Date", style: .default) { _ in
-                self.tableView.reloadData()
-            }
+            let titleButton = UIAlertAction(title: "Title", style: .default) { _ in self.viewModel.sort = .title }
+            let dateButton = UIAlertAction(title: "Date", style: .default) { _ in self.viewModel.sort = .datetime }
             let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             alert.addAction(titleButton)
             alert.addAction(dateButton)
