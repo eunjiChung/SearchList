@@ -32,6 +32,11 @@ final class FilterView: UIView {
 
     @IBOutlet weak var currentFilterButton: UIButton!
     @IBOutlet weak var filterListView: UIView!
+
+    @IBOutlet weak var allButton: UIButton!
+    @IBOutlet weak var blogButton: UIButton!
+    @IBOutlet weak var cafeButton: UIButton!
+
     @IBOutlet var filterButtons: [UIButton]!
     @IBOutlet weak var filterViewTopConstraint: NSLayoutConstraint!
 
@@ -57,27 +62,28 @@ final class FilterView: UIView {
     }
 
     private func initView() {
+        currentFilterButton.isSelected = false
         filterListView.isHidden = true
     }
 
-    // 터치 영역 넓히기
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         guard isUserInteractionEnabled || !isHidden || alpha > 0.01 else { return nil }
 
-        let touchRect = currentFilterButton.isSelected ? bounds.insetBy(dx: 0, dy: -200) : bounds.inset(by: .zero)
+        let touchRect = currentFilterButton.isSelected ? bounds.insetBy(dx: 0, dy: -150) : bounds.inset(by: .zero)
         guard touchRect.contains(point) else { return nil }
 
-        for subview in subviews.reversed() {
-            let convertedPoint = subview.convert(point, from: self)
-            if let hitTestView = subview.hitTest(convertedPoint, with: event) {
-                return hitTestView
+        for button in filterButtons {
+            let buttonPoint = self.convert(point, to: button)
+            if button.point(inside: buttonPoint, with: event) {
+                return button
             }
         }
-        return self
+
+        return super.hitTest(point, with: event)
     }
 
     @IBAction func touchFilterButton(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
+        currentFilterButton.isSelected = !currentFilterButton.isSelected
         filterListView.isHidden = !sender.isSelected
     }
 

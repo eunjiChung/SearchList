@@ -11,6 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterView" customModule="SearchList" customModuleProvider="target">
             <connections>
+                <outlet property="allButton" destination="p22-ta-sQe" id="gj3-Xv-3b5"/>
+                <outlet property="blogButton" destination="z2w-lW-Q38" id="gf8-Rl-Zgh"/>
+                <outlet property="cafeButton" destination="LEw-og-3qy" id="jl3-TX-OqC"/>
                 <outlet property="currentFilterButton" destination="9Bl-rW-ZTB" id="bFc-El-lem"/>
                 <outlet property="filterListView" destination="nVv-yW-wIn" id="ZLQ-iI-Evw"/>
                 <outlet property="filterViewTopConstraint" destination="IhE-Cl-ala" id="kYG-C7-ECf"/>
