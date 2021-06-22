@@ -36,7 +36,7 @@ class SearchListProvider {
         let listProvider = SearchOperationDataProvider()
         let filterList = FilterOperation()
         let appendList = AppendOperation(originList: originList)
-        let sortList = SortListModel(sort: sort) { isCafeEnd, isBlogEnd, newList in
+        let sortList = SortOperation(sort: sort) { isCafeEnd, isBlogEnd, newList in
             completion(isCafeEnd, isBlogEnd, newList)
         }
 
