@@ -30,6 +30,8 @@
 		B68D5F34268066BE00699C90 /* DocumentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68D5F33268066BE00699C90 /* DocumentProtocol.swift */; };
 		B68D5F382680E43000699C90 /* SearchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68D5F372680E43000699C90 /* SearchHistoryView.swift */; };
 		B68D5F3A2680E43900699C90 /* SearchHistoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B68D5F392680E43900699C90 /* SearchHistoryView.xib */; };
+		B6A9CB512681D40B00612211 /* StringGeneratorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A9CB502681D40B00612211 /* StringGeneratorTest.swift */; };
+		B6A9CB522681D44700612211 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6779EE9267DE57C002FDDDD /* String+.swift */; };
 		B6CFEBF8267D82D700CB74ED /* MainSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBF7267D82D700CB74ED /* MainSearchViewController.swift */; };
 		B6CFEBFA267D82E100CB74ED /* SearchDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBF9267D82E100CB74ED /* SearchDetailViewController.swift */; };
 		B6CFEBFC267D82FA00CB74ED /* DetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBFB267D82FA00CB74ED /* DetailWebViewController.swift */; };
@@ -98,6 +100,7 @@
 		B68D5F33268066BE00699C90 /* DocumentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentProtocol.swift; sourceTree = "<group>"; };
 		B68D5F372680E43000699C90 /* SearchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryView.swift; sourceTree = "<group>"; };
 		B68D5F392680E43900699C90 /* SearchHistoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchHistoryView.xib; sourceTree = "<group>"; };
+		B6A9CB502681D40B00612211 /* StringGeneratorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringGeneratorTest.swift; sourceTree = "<group>"; };
 		B6CFEBF7267D82D700CB74ED /* MainSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSearchViewController.swift; sourceTree = "<group>"; };
 		B6CFEBF9267D82E100CB74ED /* SearchDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailViewController.swift; sourceTree = "<group>"; };
 		B6CFEBFB267D82FA00CB74ED /* DetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWebViewController.swift; sourceTree = "<group>"; };
@@ -197,6 +200,7 @@
 		B639CBB7267D7F2200A0F141 /* SearchListTests */ = {
 			isa = PBXGroup;
 			children = (
+				B6A9CB4F2681D3D400612211 /* Validation */,
 				B639CBB8267D7F2200A0F141 /* SearchListTests.swift */,
 				B639CBBA267D7F2200A0F141 /* Info.plist */,
 			);
@@ -255,6 +259,14 @@
 				B6779F08267F3834002FDDDD /* SearchListProvider.swift */,
 			);
 			path = Operations;
+			sourceTree = "<group>";
+		};
+		B6A9CB4F2681D3D400612211 /* Validation */ = {
+			isa = PBXGroup;
+			children = (
+				B6A9CB502681D40B00612211 /* StringGeneratorTest.swift */,
+			);
+			path = Validation;
 			sourceTree = "<group>";
 		};
 		B6CFEBFD267D834A00CB74ED /* Frameworks */ = {
@@ -632,6 +644,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6A9CB512681D40B00612211 /* StringGeneratorTest.swift in Sources */,
+				B6A9CB522681D44700612211 /* String+.swift in Sources */,
 				B639CBB9267D7F2200A0F141 /* SearchListTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -730,7 +744,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -785,7 +799,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -846,7 +860,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 88356WAKJ6;
 				INFOPLIST_FILE = SearchListTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -855,7 +869,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "-.SearchListTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SearchList.app/SearchList";
 			};
 			name = Debug;
@@ -869,7 +883,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 88356WAKJ6;
 				INFOPLIST_FILE = SearchListTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -878,7 +892,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "-.SearchListTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SearchList.app/SearchList";
 			};
 			name = Release;
