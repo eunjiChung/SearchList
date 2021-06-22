@@ -20,7 +20,7 @@ protocol Sortable {
 extension Sortable {
     func compare(ofTitle first: String?, _ second: String?) -> Bool {
         guard let first = first, let second = second else { return false }
-        
+
         var isAscending: Bool = false
 
         let length: Int = min(first.count, second.count)
@@ -48,7 +48,7 @@ protocol Document: Sortable {
     var contents: String { get set }
     var datetime: String { get set }
     var url: String { get set }
-    var parsedTitle: String? { get }
+    var parsedTitle: String? { get set }
     var name: String? { get }
     var type: SearchTargetType { get }
     var isSelected: Bool { get set }

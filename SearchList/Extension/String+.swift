@@ -56,6 +56,10 @@ extension String {
             return nil
         }
     }
+
+    var containsHtml: Bool {
+        return NSPredicate(format:"SELF MATCHES %@", "<([a-z][a-z0-9]*)\\b[^>]*>(.*?)</\\1>").evaluate(with: self)
+    }
 }
 
 extension Date {
