@@ -7,8 +7,6 @@
 
 import Foundation
 
-typealias ReturnType = ((Bool, Bool, [Document]) -> Void)
-
 class SearchListProvider {
 
     fileprivate let operationQueue = OperationQueue()

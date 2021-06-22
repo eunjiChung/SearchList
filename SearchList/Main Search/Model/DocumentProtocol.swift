@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum SearchTargetType: String {
+    case cafe
+    case blog
+}
+
 protocol SearchModel {}
 
 protocol Sortable {
