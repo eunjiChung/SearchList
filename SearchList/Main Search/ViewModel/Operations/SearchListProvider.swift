@@ -34,14 +34,18 @@ class SearchListProvider {
         let cafeFetch = DataLoadOperation<CafeDocument>(target: .cafe, query: query, page: page, failure: setFailedStatus)
         let blogFetch = DataLoadOperation<BlogDocument>(target: .blog, query: query, page: page, failure: setFailedStatus)
         let listProvider = SearchOperationDataProvider()
-        let sortList = SortListModel(originList: originList, sort: sort) { isCafeEnd, isBlogEnd, newList in
+        let filterList = FilterOperation()
+        let appendList = AppendOperation(originList: originList)
+        let sortList = SortListModel(sort: sort) { isCafeEnd, isBlogEnd, newList in
             completion(isCafeEnd, isBlogEnd, newList)
         }
 
-        let operations = [cafeFetch, blogFetch, listProvider, sortList]
+        let operations = [cafeFetch, blogFetch, listProvider, filterList, appendList, sortList]
         listProvider.addDependency(cafeFetch)
         listProvider.addDependency(blogFetch)
-        sortList.addDependency(listProvider)
+        filterList.addDependency(listProvider)
+        appendList.addDependency(filterList)
+        sortList.addDependency(appendList)
 
         operationQueue.addOperations(operations, waitUntilFinished: false)
     }

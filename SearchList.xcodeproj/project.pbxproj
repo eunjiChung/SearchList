@@ -32,6 +32,8 @@
 		B68D5F3A2680E43900699C90 /* SearchHistoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B68D5F392680E43900699C90 /* SearchHistoryView.xib */; };
 		B6A9CB512681D40B00612211 /* StringGeneratorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A9CB502681D40B00612211 /* StringGeneratorTest.swift */; };
 		B6A9CB522681D44700612211 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6779EE9267DE57C002FDDDD /* String+.swift */; };
+		B6A9CB542681DD4900612211 /* FilterOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A9CB532681DD4900612211 /* FilterOperation.swift */; };
+		B6A9CB562681E09F00612211 /* AppendOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A9CB552681E09F00612211 /* AppendOperation.swift */; };
 		B6CFEBF8267D82D700CB74ED /* MainSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBF7267D82D700CB74ED /* MainSearchViewController.swift */; };
 		B6CFEBFA267D82E100CB74ED /* SearchDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBF9267D82E100CB74ED /* SearchDetailViewController.swift */; };
 		B6CFEBFC267D82FA00CB74ED /* DetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBFB267D82FA00CB74ED /* DetailWebViewController.swift */; };
@@ -101,6 +103,8 @@
 		B68D5F372680E43000699C90 /* SearchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryView.swift; sourceTree = "<group>"; };
 		B68D5F392680E43900699C90 /* SearchHistoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchHistoryView.xib; sourceTree = "<group>"; };
 		B6A9CB502681D40B00612211 /* StringGeneratorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringGeneratorTest.swift; sourceTree = "<group>"; };
+		B6A9CB532681DD4900612211 /* FilterOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOperation.swift; sourceTree = "<group>"; };
+		B6A9CB552681E09F00612211 /* AppendOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendOperation.swift; sourceTree = "<group>"; };
 		B6CFEBF7267D82D700CB74ED /* MainSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSearchViewController.swift; sourceTree = "<group>"; };
 		B6CFEBF9267D82E100CB74ED /* SearchDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailViewController.swift; sourceTree = "<group>"; };
 		B6CFEBFB267D82FA00CB74ED /* DetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWebViewController.swift; sourceTree = "<group>"; };
@@ -252,11 +256,13 @@
 		B6779F0A267F4DBA002FDDDD /* Operations */ = {
 			isa = PBXGroup;
 			children = (
+				B6779F08267F3834002FDDDD /* SearchListProvider.swift */,
 				B6779EFA267F0E28002FDDDD /* AsyncOperation.swift */,
 				B6779EFC267F1083002FDDDD /* DataLoadOperation.swift */,
-				B6779F00267F1C52002FDDDD /* SortListModel.swift */,
 				B6779F04267F1DCA002FDDDD /* SearchOperationDataProvider.swift */,
-				B6779F08267F3834002FDDDD /* SearchListProvider.swift */,
+				B6779F00267F1C52002FDDDD /* SortListModel.swift */,
+				B6A9CB532681DD4900612211 /* FilterOperation.swift */,
+				B6A9CB552681E09F00612211 /* AppendOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -621,10 +627,12 @@
 				B6CFEC0C267D8AC100CB74ED /* FilterView.swift in Sources */,
 				B639CBA2267D7F2100A0F141 /* AppDelegate.swift in Sources */,
 				B6CFEC12267D966900CB74ED /* HistoryTableViewCell.swift in Sources */,
+				B6A9CB542681DD4900612211 /* FilterOperation.swift in Sources */,
 				B6CFEBFA267D82E100CB74ED /* SearchDetailViewController.swift in Sources */,
 				B68D5F34268066BE00699C90 /* DocumentProtocol.swift in Sources */,
 				B6779EEA267DE57C002FDDDD /* String+.swift in Sources */,
 				B6779EFD267F1083002FDDDD /* DataLoadOperation.swift in Sources */,
+				B6A9CB562681E09F00612211 /* AppendOperation.swift in Sources */,
 				B6CFEBF8267D82D700CB74ED /* MainSearchViewController.swift in Sources */,
 				B6CFEBFC267D82FA00CB74ED /* DetailWebViewController.swift in Sources */,
 				B6779F05267F1DCA002FDDDD /* SearchOperationDataProvider.swift in Sources */,
