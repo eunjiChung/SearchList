@@ -11,14 +11,16 @@ protocol SearchModel {}
 
 protocol Sortable {
     func isAscendingTo(_ object: Any) -> Bool
-    func compare(ofTitle first: String, _ second: String) -> Bool
+    func compare(ofTitle first: String?, _ second: String?) -> Bool
 
     func isRecentTo(_ object: Any) -> Bool
     func compare(ofDate first: String, _ second: String) -> Bool
 }
 
 extension Sortable {
-    func compare(ofTitle first: String, _ second: String) -> Bool {
+    func compare(ofTitle first: String?, _ second: String?) -> Bool {
+        guard let first = first, let second = second else { return false }
+        
         var isAscending: Bool = false
 
         let length: Int = min(first.count, second.count)
@@ -46,6 +48,7 @@ protocol Document: Sortable {
     var contents: String { get set }
     var datetime: String { get set }
     var url: String { get set }
+    var parsedTitle: String? { get }
     var name: String? { get }
     var type: SearchTargetType { get }
     var isSelected: Bool { get set }
@@ -56,9 +59,9 @@ extension Document {
         var isAscending: Bool = false
 
         if let cafe = object as? CafeDocument {
-            isAscending = compare(ofTitle: cafe.title, self.title)
+            isAscending = compare(ofTitle: cafe.parsedTitle, self.parsedTitle)
         } else if let blog = object as? BlogDocument {
-            isAscending = compare(ofTitle: blog.title, self.title)
+            isAscending = compare(ofTitle: blog.parsedTitle, self.parsedTitle)
         }
 
         return isAscending
