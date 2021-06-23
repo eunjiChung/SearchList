@@ -12,13 +12,15 @@ class DataLoadOperation<Element: Decodable>: AsyncOperation, TargetDataProvider 
     fileprivate let target: SearchTargetType
     fileprivate let query: String
     fileprivate let page: Int
+    fileprivate let sort: SortType
     fileprivate let failure: (() -> Void)?
     internal var loadedModel: SearchModel?
 
-    init(target: SearchTargetType, query: String, page: Int, failure: (() -> Void)? = nil) {
+    init(target: SearchTargetType, query: String, page: Int, sort: SortType, failure: (() -> Void)? = nil) {
         self.target = target
         self.query = query
         self.page = page
+        self.sort = sort
         self.failure = failure
         super.init()
     }
@@ -28,7 +30,8 @@ class DataLoadOperation<Element: Decodable>: AsyncOperation, TargetDataProvider 
 
         NetworkAdapter.request(target: SearchAPI.search(target: target.rawValue,
                                                         query: query,
-                                                        page: page)) { response in
+                                                        page: page,
+                                                        sort: sort)) { response in
             if self.isCancelled { return }
 
             do {

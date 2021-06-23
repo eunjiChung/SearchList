@@ -33,8 +33,8 @@ final class SearchListProvider {
             failure()
         }
 
-        let cafeFetch = DataLoadOperation<CafeDocument>(target: .cafe, query: query, page: page, failure: setFailedStatus)
-        let blogFetch = DataLoadOperation<BlogDocument>(target: .blog, query: query, page: page, failure: setFailedStatus)
+        let cafeFetch = DataLoadOperation<CafeDocument>(target: .cafe, query: query, page: page, sort: sort, failure: setFailedStatus)
+        let blogFetch = DataLoadOperation<BlogDocument>(target: .blog, query: query, page: page, sort: sort, failure: setFailedStatus)
         let listProvider = SearchOperationDataProvider()
         let filterList = FilterOperation()
         let appendList = AppendOperation()

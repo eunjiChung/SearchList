@@ -24,4 +24,11 @@ enum FilterType: Int {
 enum SortType {
     case title
     case datetime
+
+    var type: String {
+        switch self {
+        case .title:        return "accuracy"
+        case .datetime:     return "recency"
+        }
+    }
 }
