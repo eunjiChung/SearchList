@@ -134,8 +134,8 @@ final class SearchViewModel {
         var endIndex: Int
         switch filter {
         case .all:      endIndex = newList.count
-        case .cafe:     endIndex = newList.compactMap({ $0 as? CafeDocument }).count
-        case .blog:     endIndex = newList.compactMap({ $0 as? BlogDocument }).count
+        case .cafe:     endIndex = newList.filter({ $0 is CafeDocument }).count
+        case .blog:     endIndex = newList.filter({ $0 is BlogDocument }).count
         }
         endIndex = isEnd ? endIndex-1 : endIndex
         return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }

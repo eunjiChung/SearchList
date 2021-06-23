@@ -44,12 +44,20 @@ final class SearchListProvider {
         }
 
         var operations: [Operation] = [listProvider, filterList, appendList, sortList]
-        if pageInfo?[.cafe]?.totalPage ?? 0 < page {
+
+        if let pageInfo = pageInfo {
+            if pageInfo[.cafe]?.totalPage ?? 0 >= page {
+                operations.append(cafeFetch)
+                listProvider.addDependency(cafeFetch)
+            }
+            if pageInfo[.blog]?.totalPage ?? 0 >= page {
+                operations.append(blogFetch)
+                listProvider.addDependency(blogFetch)
+            }
+        } else {
             operations.append(cafeFetch)
-            listProvider.addDependency(cafeFetch)
-        }
-        if pageInfo?[.blog]?.totalPage ?? 0 < page {
             operations.append(blogFetch)
+            listProvider.addDependency(cafeFetch)
             listProvider.addDependency(blogFetch)
         }
         filterList.addDependency(listProvider)
