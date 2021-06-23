@@ -144,14 +144,19 @@
                                     <constraint firstAttribute="height" constant="200" id="6Zb-Bo-fKp"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="LWw-lA-Esd">
+                                <rect key="frame" x="188.5" y="288" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="LWw-lA-Esd" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="5vr-s6-oQf"/>
                             <constraint firstAttribute="bottomMargin" secondItem="bCj-il-Q8e" secondAttribute="bottom" id="6kS-id-zE5"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bq3-xw-K2G" secondAttribute="trailing" id="D3o-uF-Egk"/>
                             <constraint firstItem="Ocs-Mw-hLi" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="EPY-7V-l9Z"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ocs-Mw-hLi" secondAttribute="trailing" constant="50" id="Ojf-yd-veG"/>
+                            <constraint firstItem="LWw-lA-Esd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="200" id="Y0x-p6-XY5"/>
                             <constraint firstItem="Ocs-Mw-hLi" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="eP2-fG-ZxX"/>
                             <constraint firstItem="bCj-il-Q8e" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fcb-Pl-sDG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bCj-il-Q8e" secondAttribute="trailing" id="ini-pJ-TrA"/>
@@ -164,6 +169,7 @@
                     <connections>
                         <outlet property="filterView" destination="bq3-xw-K2G" id="haa-U6-Vtv"/>
                         <outlet property="filterViewHeightConstraint" destination="vWT-cD-WDR" id="R2g-hw-YWl"/>
+                        <outlet property="loadingIndicator" destination="LWw-lA-Esd" id="q4k-v6-nwn"/>
                         <outlet property="searchHistoryView" destination="Ocs-Mw-hLi" id="auy-Mj-Uje"/>
                         <outlet property="tableView" destination="bCj-il-Q8e" id="8Qa-TG-JSE"/>
                         <segue destination="UYu-Zc-0R4" kind="show" identifier="showDetail" id="49s-cx-NR6"/>

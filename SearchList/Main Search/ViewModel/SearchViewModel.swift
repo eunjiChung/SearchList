@@ -60,6 +60,7 @@ final class SearchViewModel {
     }
 
     var isFirstPage: Bool { return page == 1 }
+    var isFirstLoad: Bool { return page <= 1 }
 
     private var page: Int = 0
 

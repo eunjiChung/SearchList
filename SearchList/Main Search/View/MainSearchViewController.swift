@@ -11,9 +11,8 @@ final class MainSearchViewController: UIViewController {
 
     @IBOutlet weak var filterView: FilterView!
     @IBOutlet weak var searchHistoryView: SearchHistoryView!
-
     @IBOutlet weak var tableView: UITableView!
-
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView?
     @IBOutlet weak var filterViewHeightConstraint: NSLayoutConstraint!
     
     lazy var searchView: CustomSearchBarView = {
@@ -40,15 +39,17 @@ final class MainSearchViewController: UIViewController {
     private func initView() {
         navigationItem.titleView = searchView
 
+        loadingIndicator?.isHidden = true
+
         tableView.backgroundView = emptyView
         tableView.estimatedRowHeight = 122.0
 
         searchView.searchKeyword = { [weak self] keyword in
             guard let self = self else { return }
             self.viewModel.query = keyword
+            self.showIndicator(isLoading: true)
             self.hideKeyboard()
         }
-
         filterView.selectFilter = { [weak self] type in
             guard let self = self else { return }
             self.viewModel.filter = type
@@ -72,24 +73,30 @@ final class MainSearchViewController: UIViewController {
     private func initViewModel() {
         viewModel = SearchViewModel(delegate: self)
     }
+}
+
+private extension MainSearchViewController {
+    private func showIndicator(isLoading: Bool) {
+        guard viewModel.isFirstLoad else { return }
+        if isLoading {
+            loadingIndicator?.startAnimating()
+        } else {
+            loadingIndicator?.stopAnimating()
+        }
+        loadingIndicator?.isHidden = !isLoading
+    }
 
     @objc func hideKeyboard() {
         searchView.endEditing(true)
     }
-}
 
-private extension MainSearchViewController {
     private func reloadTable(_ completion: (() -> Void)?) {
         DispatchQueue.main.async {
             self.emptyView.isHidden = !self.viewModel.isListEmpty
             self.tableView.reloadData()
 
-            if self.tableView.refreshControl?.isRefreshing ?? false {
-                self.tableView.refreshControl?.endRefreshing()
-            }
-
             self.scrollToTop()
-
+            self.showIndicator(isLoading: false)
             completion?()
         }
     }
