@@ -91,6 +91,8 @@ final class FilterView: UIView {
     @IBAction func selectFilter(_ sender: UIButton) {
         filterLabel.text = FilterType(rawValue: sender.tag)?.title
         selectFilter?(FilterType(rawValue: sender.tag) ?? .all)
+
+        isFilterSelected = false
         filterListView.isHidden = true
     }
 
