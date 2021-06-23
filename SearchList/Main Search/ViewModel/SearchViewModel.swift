@@ -37,34 +37,35 @@ final class SearchViewModel {
 
     var isWaiting: Bool = true
 
-    var isEnd: Bool { return isCafeEnd && isBlogEnd }
+    var isEnd: Bool { return pageInfo?.allSatisfy({ $0.value.totalPage <= page }) ?? false }
 
     var exposingList: [Document] {
         switch filter {
         case .all:      return list
-        case .cafe:     return list.compactMap({ $0 as? CafeDocument })
-        case .blog:     return list.compactMap({ $0 as? BlogDocument })
+        case .cafe:     return list.filter({ $0 is CafeDocument })
+        case .blog:     return list.filter({ $0 is BlogDocument })
         }
     }
 
-    private var list: [Document] = []
-
-    var isListEmpty: Bool { return exposingList.count == 0 }
-    var listCount: Int { return exposingList.count }
+    var isListEmpty: Bool {
+        return exposingList.count == 0
+    }
+    var listCount: Int {
+        return exposingList.count
+    }
     var rowCount: Int {
         return isListEmpty ? 0 : exposingList.count + (isEnd ? 0 : 1)
     }
 
-    var deleteIndex: Int = 0
+    var isFirstPage: Bool { return page == 1 }
 
     private var page: Int = 0
 
-    var isFirstPage: Bool { return page == 1 }
-
-    private var isCafeEnd: Bool = false
-    private var isBlogEnd: Bool = false
+    private var list: [Document] = []
 
     private weak var delegate: SearchViewModelDelegate?
+
+    var pageInfo: [SearchTargetType: PageInfoModel]?
 
     init(delegate: SearchViewModelDelegate) {
         self.delegate = delegate
@@ -73,6 +74,7 @@ final class SearchViewModel {
     private func refreshList() {
         page = 0
         list = []
+        isWaiting = true
     }
 
     func request() {
@@ -85,11 +87,14 @@ final class SearchViewModel {
         let waitingCompletion = { self.isWaiting = true }
 
         _ = SearchListProvider(originList: list,
+                               pageInfo: pageInfo,
                                sort: sort,
                                query: query,
-                               page: page) { isCafeEnd, isBlogEnd, newList in
-            self.isCafeEnd = isCafeEnd
-            self.isBlogEnd = isBlogEnd
+                               page: page) { pageInfo, newList in
+
+            if self.pageInfo == nil {
+                self.pageInfo = pageInfo
+            }
 
             if self.isFirstPage {
                 self.list = newList

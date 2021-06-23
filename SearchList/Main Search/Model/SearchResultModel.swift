@@ -20,8 +20,10 @@ struct SearchResultModel<T: Decodable>: Decodable, SearchModel {
 struct MetaModel: Decodable {
     private enum CodingKeys: String, CodingKey {
         case isEnd = "is_end"
+        case totalCount = "pageable_count"
     }
     var isEnd: Bool
+    var totalCount: Int
 }
 
 class CafeDocument: Document, Decodable {

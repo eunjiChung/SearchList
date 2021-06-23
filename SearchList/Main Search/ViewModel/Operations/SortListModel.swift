@@ -22,8 +22,8 @@ class SortListModel: Operation {
 
     override func main() {
         var list: [Document] = originList
-        var isCafeEnd: Bool = false
-        var isBlogEnd: Bool = false
+        var cafeInfo = PageInfoModel()
+        var blogInfo = PageInfoModel()
 
         if self.isCancelled { return }
 
@@ -31,12 +31,12 @@ class SortListModel: Operation {
         guard provider.isDownloadFinished else { return }
 
         if let cafeModel = provider.cafeModel as? SearchResultModel<CafeDocument> {
-            isCafeEnd = cafeModel.meta.isEnd
+            cafeInfo = PageInfoModel(totalCount: cafeModel.meta.totalCount, isEnd: cafeModel.meta.isEnd)
             list.append(contentsOf: cafeModel.documents ?? [])
         }
 
         if let blogModel = provider.blogModel as? SearchResultModel<BlogDocument> {
-            isBlogEnd = blogModel.meta.isEnd
+            blogInfo = PageInfoModel(totalCount: blogModel.meta.totalCount, isEnd: blogModel.meta.isEnd)
             list.append(contentsOf: blogModel.documents ?? [])
         }
 
@@ -45,6 +45,8 @@ class SortListModel: Operation {
         case .title:        sortedList = list.sorted { $0.isAscendingTo($1) }
         case .datetime:     sortedList = list.sorted { $0.isRecentTo($1) }
         }
-        completion?(isCafeEnd, isBlogEnd, sortedList)
+
+        let infos = [SearchTargetType.cafe: cafeInfo, SearchTargetType.blog: blogInfo]
+        completion?(infos, sortedList)
     }
 }
