@@ -75,6 +75,7 @@ final class SearchViewModel {
     private func refreshList() {
         page = 0
         list = []
+        pageInfo = nil
         isWaiting = true
     }
 
