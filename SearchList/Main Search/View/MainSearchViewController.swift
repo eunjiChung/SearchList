@@ -76,7 +76,9 @@ final class MainSearchViewController: UIViewController {
     @objc func hideKeyboard() {
         searchView.endEditing(true)
     }
+}
 
+private extension MainSearchViewController {
     private func reloadTable(_ completion: (() -> Void)?) {
         DispatchQueue.main.async {
             self.emptyView.isHidden = !self.viewModel.isListEmpty
@@ -95,6 +97,17 @@ final class MainSearchViewController: UIViewController {
 
             completion?()
         }
+    }
+
+    private func isLoadingPosition(of indexPath: IndexPath) -> Bool {
+        return !viewModel.isEnd && indexPath.row == viewModel.rowCount-1
+    }
+
+    private func changeFilterView(_ isScrollDown: Bool) {
+        guard !viewModel.isListEmpty else { return }
+        if filterView.isHidden && isScrollDown { return }
+        filterView.isHidden = isScrollDown
+        filterViewHeightConstraint.constant = isScrollDown ? 0 : 50
     }
 }
 
@@ -160,14 +173,17 @@ extension MainSearchViewController: UITableViewDataSource {
             return cell
         }
     }
-
-    private func isLoadingPosition(of indexPath: IndexPath) -> Bool {
-        return !viewModel.isEnd && indexPath.row == viewModel.rowCount-1
-    }
 }
 
 extension MainSearchViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.selectList(indexPath.row) {
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
         performSegue(withIdentifier: "showDetail", sender: viewModel.exposingList[indexPath.row])
     }
 
@@ -186,20 +202,15 @@ extension MainSearchViewController: UITableViewDelegate {
         }
 
         if isLoadingPosition {
-            viewModel.request()
+            viewModel.loadNextPage()
         }
-    }
-
-    private func changeFilterView(_ isScrollDown: Bool) {
-        guard !viewModel.isListEmpty else { return }
-        if filterView.isHidden && isScrollDown { return }
-        filterView.isHidden = isScrollDown
-        filterViewHeightConstraint.constant = isScrollDown ? 0 : 50
     }
 }
 
 extension MainSearchViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "showDetail" else { return }
+
         if let dest = segue.destination as? SearchDetailViewController,
            let model = sender as? Document {
             dest.viewModel.documentModel = model

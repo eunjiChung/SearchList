@@ -41,6 +41,7 @@ extension Sortable {
 }
 
 protocol Document: Sortable {
+    var id: UUID { get }
     var title: String { get set }
     var thumbnail: String { get set }
     var contents: String { get set }

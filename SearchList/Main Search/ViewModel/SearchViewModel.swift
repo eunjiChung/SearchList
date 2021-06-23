@@ -18,7 +18,7 @@ final class SearchViewModel {
     var query: String = "" {
         didSet {
             refreshList()
-            request()
+            loadNextPage()
         }
     }
 
@@ -72,14 +72,14 @@ final class SearchViewModel {
         self.delegate = delegate
     }
 
-    private func refreshList() {
+    public func refreshList() {
         page = 0
         list = []
         pageInfo = nil
         isWaiting = true
     }
 
-    func request() {
+    public func loadNextPage() {
         guard !query.isEmpty && !isEnd && isWaiting else { return }
 
         isWaiting = false
@@ -107,7 +107,7 @@ final class SearchViewModel {
                 self.delegate?.onFetchCompleted(with: newIndexPaths, completion: waitingCompletion)
             }
         } failure: {
-            self.delegate?.onFetchFailed(completion: waitingCompletion)
+            self.delegate?.onFetchFailed(completion: { self.isWaiting = true })
         }
     }
 
@@ -121,6 +121,12 @@ final class SearchViewModel {
         case .datetime:     list.sort { $0.isRecentTo($1) }
         }
         self.delegate?.onFilterChanged()
+    }
+
+    func selectList(_ index: Int, completion: @escaping (() -> Void)) {
+        var currentList = exposingList
+        currentList[index].isSelected = true
+        completion()
     }
 
     private func loadingIndexPaths(from newList: [Document]) -> [IndexPath]? {

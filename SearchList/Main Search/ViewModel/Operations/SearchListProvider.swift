@@ -30,7 +30,7 @@ final class SearchListProvider {
 
         let setFailedStatus = {
             guard self.isOperationExecuting else { return }
-            self.cancel()
+            self.cancelAllRequest()
             failure()
         }
 
@@ -55,7 +55,7 @@ final class SearchListProvider {
         operationQueue.addOperations(operations, waitUntilFinished: false)
     }
 
-    func cancel() {
+    func cancelAllRequest() {
         operationQueue.cancelAllOperations()
     }
 }

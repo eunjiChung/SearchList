@@ -30,20 +30,14 @@ final class SearchTableViewCell: UITableViewCell {
                 thumbnailImageView.sd_setImage(with: url, completed: nil)
             }
 
-            if model.isSelected {
-                self.backgroundColor = .lightGray.withAlphaComponent(0.2)
-            }
+            self.backgroundColor = model.isSelected ? .lightGray.withAlphaComponent(0.2) : .white
         }
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
 
-        self.backgroundColor = .white
-        docTypeLabel.text = nil
-        nameLabel.text = nil
-        titleLabel.attributedText = nil
-        dateLabel.text = nil
+        thumbnailImageView.sd_cancelCurrentImageLoad()
         thumbnailImageView.image = nil
     }
 }
