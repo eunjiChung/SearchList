@@ -10,11 +10,9 @@ import Foundation
 final class SortOperation: Operation {
 
     fileprivate let completion: ReturnType?
-    fileprivate let originList: [Document]
     fileprivate let sort: SortType
 
-    init(originList: [Document], sort: SortType, completion: ReturnType?) {
-        self.originList = originList
+    init(sort: SortType, completion: ReturnType?) {
         self.sort = sort
         self.completion = completion
         super.init()
@@ -25,7 +23,7 @@ final class SortOperation: Operation {
 
         guard let provider = dependencies.first as? AppendOperation else { return }
 
-        var list: [Document] = originList
+        var list: [Document] = []
         if let appendedList = provider.newList {
             switch sort {
             case .title:        list = appendedList.sorted { $0.isAscendingTo($1) }

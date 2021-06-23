@@ -12,29 +12,22 @@ final class AppendOperation: Operation {
     var newList: [Document]?
     var pageInfo: [SearchTargetType: PageInfoModel] = [:]
 
-    private let originList: [Document]
-
-    init(originList: [Document]) {
-        self.originList = originList
-        super.init()
-    }
-
     override func main() {
-        var list: [Document] = originList
-        var cafeInfo = PageInfoModel()
-        var blogInfo = PageInfoModel()
+        var list: [Document] = []
+        var cafeInfo = PageInfoModel(isEnd: true)
+        var blogInfo = PageInfoModel(isEnd: true)
 
         if self.isCancelled { return }
 
         guard let provider = dependencies.first as? FilterOperation else { return }
 
         if let cafeModel = provider.cafeModel as? SearchResultModel<CafeDocument> {
-            cafeInfo = PageInfoModel(totalCount: cafeModel.meta.totalCount, isEnd: cafeModel.meta.isEnd)
+            cafeInfo = PageInfoModel(isEnd: cafeModel.meta.isEnd)
             list.append(contentsOf: cafeModel.documents ?? [])
         }
 
         if let blogModel = provider.blogModel as? SearchResultModel<BlogDocument> {
-            blogInfo = PageInfoModel(totalCount: blogModel.meta.totalCount, isEnd: blogModel.meta.isEnd)
+            blogInfo = PageInfoModel(isEnd: blogModel.meta.isEnd)
             list.append(contentsOf: blogModel.documents ?? [])
         }
 

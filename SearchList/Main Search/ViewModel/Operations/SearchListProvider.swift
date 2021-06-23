@@ -18,8 +18,7 @@ final class SearchListProvider {
         return operationQueue.operations.contains(where: { $0.isExecuting })
     }
 
-    init(originList: [Document],
-         pageInfo: [SearchTargetType: PageInfoModel]?,
+    init(pageInfo: [SearchTargetType: PageInfoModel]?,
          sort: SortType,
          query: String,
          page: Int,
