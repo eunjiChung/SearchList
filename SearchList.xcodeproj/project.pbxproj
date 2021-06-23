@@ -43,6 +43,7 @@
 		B6CFEC13267D966900CB74ED /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6CFEC11267D966900CB74ED /* HistoryTableViewCell.xib */; };
 		B6CFEC16267DB56200CB74ED /* NetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEC15267DB56200CB74ED /* NetworkAdapter.swift */; };
 		B6CFEC18267DB64D00CB74ED /* SearchAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEC17267DB64D00CB74ED /* SearchAPI.swift */; };
+		B6D5BBC32682EE5E00A8612C /* PageInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D5BBC22682EE5E00A8612C /* PageInfoModel.swift */; };
 		D25A34A1A811973F78D36BD5 /* Pods_SearchList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539E28AF1B674CFA086CFE58 /* Pods_SearchList.framework */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +112,7 @@
 		B6CFEC11267D966900CB74ED /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
 		B6CFEC15267DB56200CB74ED /* NetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAdapter.swift; sourceTree = "<group>"; };
 		B6CFEC17267DB64D00CB74ED /* SearchAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPI.swift; sourceTree = "<group>"; };
+		B6D5BBC22682EE5E00A8612C /* PageInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfoModel.swift; sourceTree = "<group>"; };
 		C8D61ADDB5B7984A521FABF5 /* Pods-SearchList-SearchListUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchList-SearchListUITests.debug.xcconfig"; path = "Target Support Files/Pods-SearchList-SearchListUITests/Pods-SearchList-SearchListUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F18E2BEF511208F740E497B9 /* Pods-SearchListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchListTests.debug.xcconfig"; path = "Target Support Files/Pods-SearchListTests/Pods-SearchListTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -217,6 +219,7 @@
 			children = (
 				B66D4BCE267DC61C004D750D /* SearchResultModel.swift */,
 				B68D5F33268066BE00699C90 /* DocumentProtocol.swift */,
+				B6D5BBC22682EE5E00A8612C /* PageInfoModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -602,6 +605,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6D5BBC32682EE5E00A8612C /* PageInfoModel.swift in Sources */,
 				B6CFEC18267DB64D00CB74ED /* SearchAPI.swift in Sources */,
 				B6779EE1267DD9C6002FDDDD /* EmptyView.swift in Sources */,
 				B6779F09267F3834002FDDDD /* SearchListProvider.swift in Sources */,
