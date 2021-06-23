@@ -30,6 +30,8 @@
 		B68D5F34268066BE00699C90 /* DocumentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68D5F33268066BE00699C90 /* DocumentProtocol.swift */; };
 		B68D5F382680E43000699C90 /* SearchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68D5F372680E43000699C90 /* SearchHistoryView.swift */; };
 		B68D5F3A2680E43900699C90 /* SearchHistoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B68D5F392680E43900699C90 /* SearchHistoryView.xib */; };
+		B6A9CB672682350600612211 /* PageUpdateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A9CB662682350600612211 /* PageUpdateDelegate.swift */; };
+		B6A9CB69268244B600612211 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A9CB68268244B600612211 /* PageInfo.swift */; };
 		B6CFEBF8267D82D700CB74ED /* MainSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBF7267D82D700CB74ED /* MainSearchViewController.swift */; };
 		B6CFEBFA267D82E100CB74ED /* SearchDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBF9267D82E100CB74ED /* SearchDetailViewController.swift */; };
 		B6CFEBFC267D82FA00CB74ED /* DetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFEBFB267D82FA00CB74ED /* DetailWebViewController.swift */; };
@@ -98,6 +100,8 @@
 		B68D5F33268066BE00699C90 /* DocumentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentProtocol.swift; sourceTree = "<group>"; };
 		B68D5F372680E43000699C90 /* SearchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryView.swift; sourceTree = "<group>"; };
 		B68D5F392680E43900699C90 /* SearchHistoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchHistoryView.xib; sourceTree = "<group>"; };
+		B6A9CB662682350600612211 /* PageUpdateDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageUpdateDelegate.swift; sourceTree = "<group>"; };
+		B6A9CB68268244B600612211 /* PageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
 		B6CFEBF7267D82D700CB74ED /* MainSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSearchViewController.swift; sourceTree = "<group>"; };
 		B6CFEBF9267D82E100CB74ED /* SearchDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailViewController.swift; sourceTree = "<group>"; };
 		B6CFEBFB267D82FA00CB74ED /* DetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWebViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +188,7 @@
 			children = (
 				B639CBA1267D7F2100A0F141 /* AppDelegate.swift */,
 				B639CBA7267D7F2100A0F141 /* Main.storyboard */,
+				B6A9CB6126822AE600612211 /* Pageable */,
 				B6CFEC01267D841900CB74ED /* Main Search */,
 				B6CFEC02267D842A00CB74ED /* Detail */,
 				B6CFEC03267D842F00CB74ED /* Web */,
@@ -255,6 +260,15 @@
 				B6779F08267F3834002FDDDD /* SearchListProvider.swift */,
 			);
 			path = Operations;
+			sourceTree = "<group>";
+		};
+		B6A9CB6126822AE600612211 /* Pageable */ = {
+			isa = PBXGroup;
+			children = (
+				B6A9CB662682350600612211 /* PageUpdateDelegate.swift */,
+				B6A9CB68268244B600612211 /* PageInfo.swift */,
+			);
+			path = Pageable;
 			sourceTree = "<group>";
 		};
 		B6CFEBFD267D834A00CB74ED /* Frameworks */ = {
@@ -607,6 +621,7 @@
 				B6779F09267F3834002FDDDD /* SearchListProvider.swift in Sources */,
 				B6779EF9267F0D16002FDDDD /* SearchViewModel.swift in Sources */,
 				B6CFEC0C267D8AC100CB74ED /* FilterView.swift in Sources */,
+				B6A9CB672682350600612211 /* PageUpdateDelegate.swift in Sources */,
 				B639CBA2267D7F2100A0F141 /* AppDelegate.swift in Sources */,
 				B6CFEC12267D966900CB74ED /* HistoryTableViewCell.swift in Sources */,
 				B6CFEBFA267D82E100CB74ED /* SearchDetailViewController.swift in Sources */,
@@ -618,6 +633,7 @@
 				B6779F05267F1DCA002FDDDD /* SearchOperationDataProvider.swift in Sources */,
 				B68D5F382680E43000699C90 /* SearchHistoryView.swift in Sources */,
 				B6779EE7267DDC23002FDDDD /* SearchDetailViewModel.swift in Sources */,
+				B6A9CB69268244B600612211 /* PageInfo.swift in Sources */,
 				B66D4BCF267DC61C004D750D /* SearchResultModel.swift in Sources */,
 				B6779F01267F1C52002FDDDD /* SortListModel.swift in Sources */,
 				B6779EFB267F0E29002FDDDD /* AsyncOperation.swift in Sources */,
