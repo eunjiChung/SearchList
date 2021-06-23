@@ -149,14 +149,6 @@ extension MainSearchViewController: SearchViewModelDelegate {
         completion?()
     }
 
-    func onFilterChanged() {
-        DispatchQueue.main.async {
-            self.emptyView.isHidden = !self.viewModel.isListEmpty
-            self.tableView.reloadData()
-            self.scrollToTop()
-        }
-    }
-
     private func scrollToTop() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
             if !self.viewModel.isListEmpty {
