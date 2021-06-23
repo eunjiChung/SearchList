@@ -34,6 +34,7 @@ class CafeDocument: Document, Decodable {
         case cafename
     }
 
+    var id = UUID()
     var title: String
     var thumbnail: String
     var contents: String
@@ -56,6 +57,7 @@ class BlogDocument: Document, Decodable {
         case blogname
     }
 
+    var id = UUID()
     var title: String
     var thumbnail: String
     var contents: String
