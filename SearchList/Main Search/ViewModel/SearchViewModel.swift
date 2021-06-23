@@ -10,6 +10,7 @@ import Foundation
 protocol SearchViewModelDelegate: AnyObject {
     func onFetchCompleted(with indexPaths: [IndexPath]?, completion: (() -> Void)?)
     func onFetchFailed(completion: (() -> Void)?)
+    func onFilterChanged()
 }
 
 final class SearchViewModel {
@@ -110,28 +111,26 @@ final class SearchViewModel {
     }
 
     private func filterList() {
-        self.delegate?.onFetchCompleted(with: .none, completion: nil)
+        self.delegate?.onFilterChanged()
     }
 
     private func sortList() {
         switch sort {
-        case .title:
-            list.sort { $0.isAscendingTo($1) }
-        case .datetime:
-            list.sort { $0.isRecentTo($1) }
+        case .title:        list.sort { $0.isAscendingTo($1) }
+        case .datetime:     list.sort { $0.isRecentTo($1) }
         }
-        self.delegate?.onFetchCompleted(with: .none, completion: nil)
+        self.delegate?.onFilterChanged()
     }
 
     private func loadingIndexPaths(from newList: [Document]) -> [IndexPath]? {
         let startIndex = listCount
-        let endIndex: Int
+        var endIndex: Int
         switch filter {
         case .all:      endIndex = newList.count
         case .cafe:     endIndex = newList.compactMap({ $0 as? CafeDocument }).count
         case .blog:     endIndex = newList.compactMap({ $0 as? BlogDocument }).count
         }
-        deleteIndex = startIndex
+        endIndex = isEnd ? endIndex-1 : endIndex
         return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
     }
 }

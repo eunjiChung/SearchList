@@ -91,9 +91,7 @@ final class MainSearchViewController: UIViewController {
                 self.tableView.refreshControl?.endRefreshing()
             }
 
-            if !self.viewModel.isListEmpty {
-                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-            }
+            self.scrollToTop()
 
             completion?()
         }
@@ -109,11 +107,14 @@ extension MainSearchViewController: SearchViewModelDelegate {
 
         DispatchQueue.main.async {
             self.tableView.performBatchUpdates {
-                if self.viewModel.isEnd {
-                    self.tableView.deleteRows(at: [IndexPath(row: self.viewModel.deleteIndex, section: 0)], with: .fade)
-                }
                 self.tableView.insertRows(at: newIndexPaths, with: .fade)
             } completion: { _ in
+                if let visibleRows = self.tableView.indexPathsForVisibleRows {
+                    let intersectionRows = Set(newIndexPaths).intersection(Set(visibleRows))
+                    if intersectionRows.count > 0 {
+                        self.tableView.reloadRows(at: Array(intersectionRows), with: .none)
+                    }
+                }
                 completion?()
             }
         }
@@ -125,6 +126,21 @@ extension MainSearchViewController: SearchViewModelDelegate {
         present(alert, animated: true, completion: nil)
 
         completion?()
+    }
+
+    func onFilterChanged() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.scrollToTop()
+        }
+    }
+
+    private func scrollToTop() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
+            if !self.viewModel.isListEmpty {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
+        })
     }
 }
 
