@@ -114,7 +114,7 @@ private extension MainSearchViewController {
 }
 
 extension MainSearchViewController: SearchViewModelDelegate {
-    func onFetchCompleted(with indexPaths: [IndexPath]?, deleteIndex: Int?, completion: (() -> Void)?) {
+    func onFetchCompleted(with indexPaths: [IndexPath]?, deleteIndex: Int?, scrollTo index: Int, completion: (() -> Void)?) {
         guard let newIndexPaths = indexPaths else {
             reloadTable { completion?() }
             return
@@ -135,6 +135,12 @@ extension MainSearchViewController: SearchViewModelDelegate {
                         self.tableView.reloadRows(at: Array(intersectionRows), with: .none)
                     }
                 }
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
+                    if !self.viewModel.isListEmpty {
+                        self.tableView.scrollToRow(at: IndexPath(row: index, section: 0), at: .middle, animated: false)
+                    }
+                })
 
                 completion?()
             }
@@ -178,9 +184,13 @@ extension MainSearchViewController: UITableViewDataSource {
 
 extension MainSearchViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        if indexPaths.contains(where: isLoadingPosition(of:)) {
-            viewModel.loadNextPage()
-        }
+        guard indexPaths.contains(where: isLoadingPosition(of:)) else { return }
+        guard viewModel.isWaiting else { return }
+
+        let first = tableView.indexPathsForVisibleRows?.first?.row ?? 0
+        let last = tableView.indexPathsForVisibleRows?.last?.row ?? 1
+        let index = first + (last - first)/2
+        viewModel.loadNextPage(id: viewModel.exposingList[index].id)
     }
 }
 

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SearchViewModelDelegate: AnyObject {
-    func onFetchCompleted(with indexPaths: [IndexPath]?, deleteIndex: Int?, completion: (() -> Void)?)
+    func onFetchCompleted(with indexPaths: [IndexPath]?, deleteIndex: Int?, scrollTo index: Int, completion: (() -> Void)?)
     func onFetchFailed(completion: (() -> Void)?)
 }
 
@@ -17,7 +17,7 @@ final class SearchViewModel {
     var query: String = "" {
         didSet {
             refreshList()
-            loadNextPage()
+            loadNextPage(id: .none)
         }
     }
 
@@ -32,7 +32,7 @@ final class SearchViewModel {
         didSet {
             if oldValue == sort { return }
             refreshList()
-            loadNextPage()
+            loadNextPage(id: .none)
         }
     }
 
@@ -80,16 +80,16 @@ final class SearchViewModel {
         isWaiting = true
     }
 
-    public func loadNextPage() {
+    public func loadNextPage(id: UUID?) {
         guard !query.isEmpty && !isEnd && isWaiting else { return }
 
         isWaiting = false
 
         page += 1
 
-        let waitingCompletion = {
-            self.isWaiting = true
-        }
+        let temp = list
+
+        let waitingCompletion = { self.isWaiting = true }
 
         _ = SearchListProvider(pageInfo: pageInfo,
                                sort: sort,
@@ -99,25 +99,45 @@ final class SearchViewModel {
 
             if self.isFirstPage {
                 self.list.append(contentsOf: newList)
-                self.delegate?.onFetchCompleted(with: .none, deleteIndex: .none, completion: waitingCompletion)
+                self.sortList()
+                self.delegate?.onFetchCompleted(with: .none, deleteIndex: .none, scrollTo: 0, completion: waitingCompletion)
             } else {
-                let startIndex: Int = self.listCount
+                let startIndex: Int = temp.count
+                
                 self.list.append(contentsOf: newList)
+                self.sortList()
+
+                var scrollIndex: Int = 0
+                for (index, document) in self.list.enumerated() {
+                    if document.id == id {
+                        scrollIndex = index
+                        break
+                    }
+                }
+
                 let newIndexPaths = self.loadingIndexPaths(from: startIndex)
-                self.delegate?.onFetchCompleted(with: newIndexPaths, deleteIndex: startIndex, completion: waitingCompletion)
+                self.delegate?.onFetchCompleted(with: newIndexPaths, deleteIndex: startIndex, scrollTo: scrollIndex, completion: waitingCompletion)
             }
         } failure: {
             self.delegate?.onFetchFailed(completion: { self.isWaiting = true })
         }
     }
 
+    private func sortList() {
+        switch sort {
+        case .title:
+            list = list.sorted(by: { $0.isAscendingTo($1) })
+        case .datetime:
+            list = list.sorted(by: { $0.isRecentTo($1) })
+        }
+    }
+
     private func filterList() {
-        self.delegate?.onFetchCompleted(with: .none, deleteIndex: .none, completion: nil)
+        self.delegate?.onFetchCompleted(with: .none, deleteIndex: .none, scrollTo: 0, completion: nil)
     }
 
     func selectList(_ index: Int, completion: @escaping (() -> Void)) {
-        var currentList = exposingList
-        currentList[index].isSelected = true
+        list.modifyElement(atIndex: index) { $0.isSelected = true }
         completion()
     }
 

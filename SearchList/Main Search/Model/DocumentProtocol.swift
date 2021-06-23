@@ -24,7 +24,7 @@ protocol Sortable {
 
 extension Sortable {
     func compare(ofTitle first: String?, _ second: String?) -> Bool {
-        guard let first = first, let second = second else { return false }
+        guard let first = first?.withoutHTML, let second = second?.withoutHTML else { return false }
 
         var isAscending: Bool = false
 
@@ -65,9 +65,9 @@ extension Document {
         var isAscending: Bool = false
 
         if let cafe = object as? CafeDocument {
-            isAscending = compare(ofTitle: cafe.parsedTitle, self.parsedTitle)
+            isAscending = compare(ofTitle: cafe.title, self.title)
         } else if let blog = object as? BlogDocument {
-            isAscending = compare(ofTitle: blog.parsedTitle, self.parsedTitle)
+            isAscending = compare(ofTitle: blog.title, self.title)
         }
 
         return isAscending

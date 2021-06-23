@@ -57,6 +57,10 @@ extension String {
         }
     }
 
+    var withoutHTML: String? {
+        return self.replacingOccurrences(of: "<[^>]+>", with: "", options: String.CompareOptions.regularExpression, range: nil).replacingOccurrences(of: "&[^;]+;", with: "", options:.regularExpression, range: nil)
+    }
+
     var containsHtml: Bool {
         return NSPredicate(format:"SELF MATCHES %@", "<([a-z][a-z0-9]*)\\b[^>]*>(.*?)</\\1>").evaluate(with: self)
     }

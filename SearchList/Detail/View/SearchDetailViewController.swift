@@ -45,7 +45,7 @@ class SearchDetailViewController: UIViewController {
 
     @IBAction func touchDetailInfo(_ sender: Any) {
         guard let model = viewModel.documentModel else { fatalError() }
-        let info: WebInfo = (model.title, model.url)
+        let info: WebInfo = (model.title.removeHtml ?? "", model.url)
         performSegue(withIdentifier: "showWebPage", sender: info)
     }
 }
