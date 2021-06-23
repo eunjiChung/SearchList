@@ -84,13 +84,11 @@ final class SearchViewModel {
         guard !query.isEmpty && !isEnd && isWaiting else { return }
 
         isWaiting = false
-        hasMore = isEnd
 
         page += 1
 
         let waitingCompletion = {
             self.isWaiting = true
-            self.hasMore = self.isEnd
         }
 
         _ = SearchListProvider(pageInfo: pageInfo,
