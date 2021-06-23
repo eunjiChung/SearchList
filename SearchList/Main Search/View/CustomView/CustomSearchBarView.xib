@@ -18,7 +18,7 @@
             <rect key="frame" x="0.0" y="0.0" width="534" height="382"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="o5c-o8-Uc7">
+                <searchBar contentMode="redraw" placeholder="검색어를 입력해주세요" translatesAutoresizingMaskIntoConstraints="NO" id="o5c-o8-Uc7">
                     <rect key="frame" x="0.0" y="0.0" width="484" height="382"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

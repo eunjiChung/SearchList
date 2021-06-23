@@ -28,6 +28,8 @@ final class SearchTableViewCell: UITableViewCell {
 
             if let url = URL(string: model.thumbnail) {
                 thumbnailImageView.sd_setImage(with: url, completed: nil)
+            } else {
+                thumbnailImageView.isHidden = true
             }
 
             self.backgroundColor = model.isSelected ? .lightGray.withAlphaComponent(0.2) : .white
@@ -37,6 +39,7 @@ final class SearchTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 
+        thumbnailImageView.isHidden = false
         thumbnailImageView.sd_cancelCurrentImageLoad()
         thumbnailImageView.image = nil
     }
