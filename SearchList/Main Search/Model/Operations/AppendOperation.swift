@@ -8,9 +8,13 @@
 import Foundation
 
 final class AppendOperation: Operation {
+    
+    fileprivate let completion: ReturnType?
 
-    var newList: [Document]?
-    var pageInfo: [SearchTargetType: PageInfoModel] = [:]
+    init(completion: ReturnType?) {
+        self.completion = completion
+        super.init()
+    }
 
     override func main() {
         var list: [Document] = []
@@ -31,7 +35,7 @@ final class AppendOperation: Operation {
             list.append(contentsOf: blogModel.documents ?? [])
         }
 
-        newList = list
-        pageInfo = [SearchTargetType.cafe: cafeInfo, SearchTargetType.blog: blogInfo]
+        let pageInfo = [SearchTargetType.cafe: cafeInfo, SearchTargetType.blog: blogInfo]
+        completion?(pageInfo, list)
     }
 }

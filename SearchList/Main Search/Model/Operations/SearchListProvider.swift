@@ -37,12 +37,11 @@ final class SearchListProvider {
         let blogFetch = DataLoadOperation<BlogDocument>(target: .blog, query: query, page: page, sort: sort, failure: setFailedStatus)
         let listProvider = SearchOperationDataProvider()
         let filterList = FilterOperation()
-        let appendList = AppendOperation()
-        let sortList = SortOperation(sort: sort) { infoDict, newList in
-            completion(infoDict, newList)
+        let appendList = AppendOperation { pageInfo, newList in
+            completion(pageInfo, newList)
         }
 
-        var operations: [Operation] = [listProvider, filterList, appendList, sortList]
+        var operations: [Operation] = [listProvider, filterList, appendList]
 
         if let pageInfo = pageInfo {
             if !(pageInfo[.cafe]?.isEnd ?? true) {
@@ -61,7 +60,6 @@ final class SearchListProvider {
         }
         filterList.addDependency(listProvider)
         appendList.addDependency(filterList)
-        sortList.addDependency(appendList)
 
         operationQueue.addOperations(operations, waitUntilFinished: false)
     }

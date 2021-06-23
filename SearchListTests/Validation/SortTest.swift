@@ -29,7 +29,6 @@ class SortTest: XCTestCase {
         var result: [String] = []
         sut.newList = givenDocuments
         let sort = SortOperation(sort: .title) { _, _, list in
-            result = list.compactMap({ $0.parsedTitle })
             expectation.fulfill()
         }
         sut.addDependency(sort)

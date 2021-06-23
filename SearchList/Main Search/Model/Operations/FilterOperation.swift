@@ -19,11 +19,9 @@ class FilterOperation: Operation {
         guard provider.isDownloadFinished else { return }
 
         if let cafeModel = provider.cafeModel as? SearchResultModel<CafeDocument> {
-            cafeModel.documents?.forEach({ $0.parsedTitle = $0.title.containsHtml ? $0.title.removeHtml : $0.title })
             self.cafeModel = cafeModel
         }
         if let blogModel = provider.blogModel as? SearchResultModel<BlogDocument> {
-            blogModel.documents?.forEach({ $0.parsedTitle = $0.title.containsHtml ? $0.title.removeHtml : $0.title })
             self.blogModel = blogModel
         }
     }
