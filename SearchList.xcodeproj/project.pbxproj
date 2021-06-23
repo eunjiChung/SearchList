@@ -238,6 +238,7 @@
 		B66D4BCD267DC5BD004D750D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B6779F0A267F4DBA002FDDDD /* Operations */,
 				B66D4BCE267DC61C004D750D /* SearchResultModel.swift */,
 				B68D5F33268066BE00699C90 /* DocumentProtocol.swift */,
 				B6D5BBC22682EE5E00A8612C /* PageInfoModel.swift */,
@@ -390,7 +391,6 @@
 			isa = PBXGroup;
 			children = (
 				B6779EF8267F0D16002FDDDD /* SearchViewModel.swift */,
-				B6779F0A267F4DBA002FDDDD /* Operations */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
