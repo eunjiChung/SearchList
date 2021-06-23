@@ -7,6 +7,10 @@
 
 import Foundation
 
+protocol TargetDataProvider {
+    var loadedModel: SearchModel? { get set }
+}
+
 class SearchOperationDataProvider: Operation {
 
     var cafeModel: SearchModel?

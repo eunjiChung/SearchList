@@ -7,15 +7,6 @@
 
 import Foundation
 
-enum SearchTargetType: String {
-    case cafe
-    case blog
-}
-
-protocol TargetDataProvider {
-    var loadedModel: SearchModel? { get set }
-}
-
 class DataLoadOperation<Element: Decodable>: AsyncOperation, TargetDataProvider {
     
     fileprivate let target: SearchTargetType

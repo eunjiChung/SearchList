@@ -44,6 +44,7 @@ class CafeDocument: Document, Decodable {
     var url: String
     var cafename: String?
 
+    var parsedTitle: String?
     var name: String? { return cafename }
     var type: SearchTargetType { return .cafe }
     var isSelected: Bool = false
@@ -67,6 +68,7 @@ class BlogDocument: Document, Decodable {
     var url: String
     var blogname: String?
 
+    var parsedTitle: String?
     var name: String? { return blogname }
     var type: SearchTargetType { return .blog }
     var isSelected: Bool = false
