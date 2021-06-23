@@ -175,11 +175,15 @@ extension MainSearchViewController: UITableViewDataSource {
     }
 }
 
-extension MainSearchViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-
+extension MainSearchViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        if indexPaths.contains(where: isLoadingPosition(of:)) {
+            viewModel.loadNextPage()
+        }
     }
+}
 
+extension MainSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.selectList(indexPath.row) {
             self.tableView.reloadRows(at: [indexPath], with: .none)
@@ -195,14 +199,9 @@ extension MainSearchViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentOffsetY: CGFloat = scrollView.contentOffset.y
         let isScrollDown: Bool = scrollView.panGestureRecognizer.translation(in: scrollView).y < 0
-        let isLoadingPosition: Bool = (contentOffsetY + scrollView.frame.size.height) >= scrollView.contentSize.height
 
         if contentOffsetY > 50 || contentOffsetY < (scrollView.frame.size.height - 50) {
             changeFilterView(isScrollDown)
-        }
-
-        if isLoadingPosition {
-            viewModel.loadNextPage()
         }
     }
 }

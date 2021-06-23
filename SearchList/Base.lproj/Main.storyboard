@@ -127,6 +127,7 @@
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="E0V-Sq-BRq"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="fxt-fC-G0B"/>
+                                    <outlet property="prefetchDataSource" destination="BYZ-38-t0r" id="Vql-tL-GHw"/>
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bq3-xw-K2G" customClass="FilterView" customModule="SearchList" customModuleProvider="target">
