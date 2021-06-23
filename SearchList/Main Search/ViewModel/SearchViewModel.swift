@@ -32,13 +32,13 @@ final class SearchViewModel {
     var sort: SortType = .title {
         didSet {
             if oldValue == sort { return }
-            sortList()
+            refreshList()
+            loadNextPage()
         }
     }
 
     var isWaiting: Bool = true
-
-    var hasMore: Bool = true
+    
     var isEnd: Bool { return pageInfo?.allSatisfy({ $0.value.isEnd }) ?? false }
 
     var exposingList: [Document] {
@@ -112,14 +112,6 @@ final class SearchViewModel {
     }
 
     private func filterList() {
-        self.delegate?.onFilterChanged()
-    }
-
-    private func sortList() {
-        switch sort {
-        case .title:        list.sort { $0.isAscendingTo($1) }
-        case .datetime:     list.sort { $0.isRecentTo($1) }
-        }
         self.delegate?.onFilterChanged()
     }
 
