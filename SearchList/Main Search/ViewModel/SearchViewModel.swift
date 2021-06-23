@@ -10,7 +10,6 @@ import Foundation
 protocol SearchViewModelDelegate: AnyObject {
     func onFetchCompleted(with indexPaths: [IndexPath]?, deleteIndex: Int?, completion: (() -> Void)?)
     func onFetchFailed(completion: (() -> Void)?)
-    func onFilterChanged()
 }
 
 final class SearchViewModel {
@@ -113,7 +112,7 @@ final class SearchViewModel {
     }
 
     private func filterList() {
-        self.delegate?.onFilterChanged()
+        self.delegate?.onFetchCompleted(with: .none, deleteIndex: .none, completion: nil)
     }
 
     func selectList(_ index: Int, completion: @escaping (() -> Void)) {
