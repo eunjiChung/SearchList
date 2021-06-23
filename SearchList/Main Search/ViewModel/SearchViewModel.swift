@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SearchViewModelDelegate: AnyObject {
-    func onFetchCompleted(with indexPaths: [IndexPath]?, completion: (() -> Void)?)
+    func onFetchCompleted(with indexPaths: [IndexPath]?, deleteIndex: Int?, completion: (() -> Void)?)
     func onFetchFailed(completion: (() -> Void)?)
     func onFilterChanged()
 }
@@ -38,7 +38,8 @@ final class SearchViewModel {
 
     var isWaiting: Bool = true
 
-    var isEnd: Bool { return pageInfo?.allSatisfy({ $0.value.totalPage <= page }) ?? false }
+    var hasMore: Bool = true
+    var isEnd: Bool { return pageInfo?.allSatisfy({ $0.value.isEnd }) ?? false }
 
     var exposingList: [Document] {
         switch filter {
@@ -83,28 +84,29 @@ final class SearchViewModel {
         guard !query.isEmpty && !isEnd && isWaiting else { return }
 
         isWaiting = false
+        hasMore = isEnd
 
         page += 1
 
-        let waitingCompletion = { self.isWaiting = true }
+        let waitingCompletion = {
+            self.isWaiting = true
+            self.hasMore = self.isEnd
+        }
 
-        _ = SearchListProvider(originList: list,
-                               pageInfo: pageInfo,
+        _ = SearchListProvider(pageInfo: pageInfo,
                                sort: sort,
                                query: query,
                                page: page) { pageInfo, newList in
-
-            if self.pageInfo == nil {
-                self.pageInfo = pageInfo
-            }
+            self.pageInfo = pageInfo
 
             if self.isFirstPage {
-                self.list = newList
-                self.delegate?.onFetchCompleted(with: .none, completion: waitingCompletion)
+                self.list.append(contentsOf: newList)
+                self.delegate?.onFetchCompleted(with: .none, deleteIndex: .none, completion: waitingCompletion)
             } else {
-                let newIndexPaths = self.loadingIndexPaths(from: newList)
-                self.list = newList
-                self.delegate?.onFetchCompleted(with: newIndexPaths, completion: waitingCompletion)
+                let startIndex: Int = self.listCount
+                self.list.append(contentsOf: newList)
+                let newIndexPaths = self.loadingIndexPaths(from: startIndex)
+                self.delegate?.onFetchCompleted(with: newIndexPaths, deleteIndex: startIndex, completion: waitingCompletion)
             }
         } failure: {
             self.delegate?.onFetchFailed(completion: { self.isWaiting = true })
@@ -129,15 +131,9 @@ final class SearchViewModel {
         completion()
     }
 
-    private func loadingIndexPaths(from newList: [Document]) -> [IndexPath]? {
-        let startIndex = listCount
-        var endIndex: Int
-        switch filter {
-        case .all:      endIndex = newList.count
-        case .cafe:     endIndex = newList.filter({ $0 is CafeDocument }).count
-        case .blog:     endIndex = newList.filter({ $0 is BlogDocument }).count
-        }
-        endIndex = isEnd ? endIndex-1 : endIndex
+    private func loadingIndexPaths(from startIndex: Int) -> [IndexPath]? {
+        let startIndex = startIndex
+        let endIndex = isEnd ? listCount : listCount+1
         return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
     }
 }

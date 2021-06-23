@@ -82,12 +82,7 @@ private extension MainSearchViewController {
     private func reloadTable(_ completion: (() -> Void)?) {
         DispatchQueue.main.async {
             self.emptyView.isHidden = !self.viewModel.isListEmpty
-
-            if self.viewModel.isFirstPage {
-                self.tableView.reloadData()
-            } else {
-                self.tableView.reloadRows(at: self.tableView.indexPathsForVisibleRows ?? [], with: .none)
-            }
+            self.tableView.reloadData()
 
             if self.tableView.refreshControl?.isRefreshing ?? false {
                 self.tableView.refreshControl?.endRefreshing()
@@ -112,7 +107,7 @@ private extension MainSearchViewController {
 }
 
 extension MainSearchViewController: SearchViewModelDelegate {
-    func onFetchCompleted(with indexPaths: [IndexPath]?, completion: (() -> Void)?) {
+    func onFetchCompleted(with indexPaths: [IndexPath]?, deleteIndex: Int?, completion: (() -> Void)?) {
         guard let newIndexPaths = indexPaths else {
             reloadTable { completion?() }
             return
@@ -120,14 +115,20 @@ extension MainSearchViewController: SearchViewModelDelegate {
 
         DispatchQueue.main.async {
             self.tableView.performBatchUpdates {
+                if let deleteIndex = deleteIndex {
+                    self.tableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .none)
+                }
                 self.tableView.insertRows(at: newIndexPaths, with: .fade)
-            } completion: { _ in
+            } completion: { finished in
+                guard finished else { return }
+
                 if let visibleRows = self.tableView.indexPathsForVisibleRows {
                     let intersectionRows = Set(newIndexPaths).intersection(Set(visibleRows))
                     if intersectionRows.count > 0 {
                         self.tableView.reloadRows(at: Array(intersectionRows), with: .none)
                     }
                 }
+
                 completion?()
             }
         }
@@ -143,6 +144,7 @@ extension MainSearchViewController: SearchViewModelDelegate {
 
     func onFilterChanged() {
         DispatchQueue.main.async {
+            self.emptyView.isHidden = !self.viewModel.isListEmpty
             self.tableView.reloadData()
             self.scrollToTop()
         }
