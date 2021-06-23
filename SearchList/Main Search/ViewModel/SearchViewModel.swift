@@ -17,7 +17,7 @@ final class SearchViewModel {
     var query: String = "" {
         didSet {
             refreshList()
-            request()
+            loadNextPage()
         }
     }
 
@@ -42,20 +42,20 @@ final class SearchViewModel {
     var exposingList: [Document] {
         switch filter {
         case .all:      return list
-        case .cafe:     return list.compactMap({ $0 as? CafeDocument })
-        case .blog:     return list.compactMap({ $0 as? BlogDocument })
+        case .cafe:     return list.filter({ $0 is CafeDocument })
+        case .blog:     return list.filter({ $0 is BlogDocument })
         }
     }
 
     private var list: [Document] = []
+    private var dict: [UUID : Any] = [:]
+    private var keyPath: KeyPath<Document, UUID>?
 
     var isListEmpty: Bool { return exposingList.count == 0 }
     var listCount: Int { return exposingList.count }
     var rowCount: Int {
         return isListEmpty ? 0 : exposingList.count + (isEnd ? 0 : 1)
     }
-
-    var deleteIndex: Int = 0
 
     private var page: Int = 0
 
@@ -66,41 +66,41 @@ final class SearchViewModel {
 
     private weak var delegate: SearchViewModelDelegate?
 
+    var provider = SearchListProvider()
+
     init(delegate: SearchViewModelDelegate) {
         self.delegate = delegate
     }
 
-    private func refreshList() {
+    public func refreshList() {
+        list.removeAll()
         page = 0
-        list = []
+        provider.cancelAllRequest()
+        // TODO: - 페이지 로딩
+        provider.loadPage(originList: list, sort: sort, query: query, page: page) { info in
+            self.bindNewPage(info)
+        } failure: {
+            self.delegate?.onFetchFailed(completion: { self.isWaiting = true })
+        }
     }
 
-    func request() {
+    public func loadNextPage() {
         guard !query.isEmpty && !isEnd && isWaiting else { return }
 
         isWaiting = false
 
         page += 1
 
-        let waitingCompletion = { self.isWaiting = true }
-
-        _ = SearchListProvider(originList: list,
-                               sort: sort,
-                               query: query,
-                               page: page) { isCafeEnd, isBlogEnd, newList in
-            self.isCafeEnd = isCafeEnd
-            self.isBlogEnd = isBlogEnd
-
-            if self.isFirstPage {
-                self.list = newList
-                self.delegate?.onFetchCompleted(with: .none, completion: waitingCompletion)
-            } else {
-                let newIndexPaths = self.loadingIndexPaths(from: newList)
-                self.list = newList
-                self.delegate?.onFetchCompleted(with: newIndexPaths, completion: waitingCompletion)
-            }
+        provider.loadPage(originList: list, sort: sort, query: query, page: page) { info in
+            self.bindNewPage(info)
         } failure: {
-            self.delegate?.onFetchFailed(completion: waitingCompletion)
+            self.delegate?.onFetchFailed(completion: { self.isWaiting = true })
+        }
+    }
+
+    public func shouldPrefetch(index: Int) {
+        if index == listCount - 1 {
+            loadNextPage()
         }
     }
 
@@ -118,15 +118,37 @@ final class SearchViewModel {
         self.delegate?.onFetchCompleted(with: .none, completion: nil)
     }
 
+    func selectList(_ index: Int, completion: @escaping (() -> Void)) {
+        var currentList = exposingList
+        currentList[index].isSelected = true
+        completion()
+    }
+
+    private func bindNewPage(_ info: PageInfo) {
+        self.isCafeEnd = info.isCafeEnd
+        self.isBlogEnd = info.isBlogEnd
+
+        let waitingCompletion = { self.isWaiting = true }
+
+        if self.isFirstPage {
+            self.list = info.documents
+            self.delegate?.onFetchCompleted(with: .none, completion: waitingCompletion)
+        } else {
+            let newIndexPaths = self.loadingIndexPaths(from: info.documents)
+            self.list = info.documents
+            self.delegate?.onFetchCompleted(with: newIndexPaths, completion: waitingCompletion)
+        }
+    }
+
     private func loadingIndexPaths(from newList: [Document]) -> [IndexPath]? {
         let startIndex = listCount
-        let endIndex: Int
+        var endIndex: Int
         switch filter {
         case .all:      endIndex = newList.count
         case .cafe:     endIndex = newList.compactMap({ $0 as? CafeDocument }).count
         case .blog:     endIndex = newList.compactMap({ $0 as? BlogDocument }).count
         }
-        deleteIndex = startIndex
+        endIndex = isEnd ? endIndex-1 : endIndex
         return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
     }
 }
